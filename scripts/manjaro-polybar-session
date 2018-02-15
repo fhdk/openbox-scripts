@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+
+
+# manjaro-polybar-session: Polybar session launcher script for Manjaro
+# Specify a different sessionfile with [--session] or [-z] and passing a valid path
+# You can call this script regardless of WM and it will handle launching the right bars
+# simply add 'sleep 1; manjaro-polybar-session &' to your autostart
+
+# Copyright (C) 2017 Nathaniel Maia <natemaia10@gmail.com>
+# This program is provided free of charge and without warranty
+# I ask that if you use this program and make additions/changes
+# that you share and contribute back additions/changes
+
+####################################################################################
+
+if ! hash polybar read &>/dev/null; then
+    echo "[ERROR]: Missing Commands. It is required to install 'polybar' 'readline'"
+    exit 1
+fi
+
+window_Managers=(bspwm i3 openbox xfce awesome)
+for i in "${window_Managers[@]}"; do
+    if [[ "$(wmctrl -m | grep -i name | awk '{print tolower($2)}')" == "$i" ]]; then
+        WM=$i && break
+    elif [[ "$(xprop -root -notype | grep "WM_NAME =" | tr -d '"' | awk '{print tolower($3)}')" == "$i" ]]; then
+        WM=$i && break
+    elif [[ "$(awk '{print tolower($0)}' <<< "$XDG_CURRENT_DESKTOP")" == "$i" ]]; then
+        WM=$i && break
+    fi
+done
+
+CONFPATH="$HOME/.config/polybar"
+if [[ "$WM" ]]; then
+    SESSIONFILE="$CONFPATH/sessions/$WM-sessionfile"
+else
+    SESSIONFILE="$CONFPATH/sessions/sessionfile"
+fi
+
+HELP="\nUSAGE:\n\tstart-polybar [OPTIONS] [SESSIONFILE]
+\nOPTIONS:
+\t-h, --help\tPrint this usage message and exit
+\t-z, --session\tUse passed sessionfile instead of default\n\t\t\t$SESSIONFILE
+\nEXAMPLES:\n\n\tRun the default session\n\t'manjaro-polybar-session'
+\n\tLoad a session saved in ~/.sessionfile\n\t'manjaro-polybar-session -z \$HOME/.sessionfile'
+\n\nSessions are handled on a per WM basis, for each WM, a WM-sessionfile will be created
+The script will launch the right session for the WM a sessionfile is specified
+Bars in a session can be chosen by running 'manjaro-polyzen' or manually configure
+\n\t$SESSIONFILE
+\n\nTo have session run at startup add the following line to your autostart:
+\n\tsleep1; manjaro-polybar-session &"
+
+start_Session() {
+    if [ -f "$SESSIONFILE" ]; then
+        while [[ $(pidof polybar) ]]; do pkill polybar && sleep 0.2; done
+        while read -r c b; do
+            if [[ "$c $b" =~ ^#.*$ ]] || [[ "$c $b" == "" ]]; then
+                continue
+            fi
+            if [[ -e "$c" ]]; then
+                polybar --reload --config="$c" "$b" &
+            fi
+        done < "$SESSIONFILE"
+    else
+        echo -e "No sessionfile found
+        \n\tPlease setup your config directory then run 'manjaro-polyzen' to setup a sessionfile in\n\n\t'$CONFPATH'"
+    fi
+    sleep 1.5
+    if ! [[ "$(pidof polybar)" ]] && hash manjaro-polyzen &>/dev/null; then
+        manjaro-polyzen &
+    fi
+}
+
+case $1 in
+    *help|-h)
+        echo -e "$HELP" && exit 0
+        ;;
+    -z|*session)
+        for arg in "$@"; do
+            if [ -f "$arg" ]; then
+                SESSIONFILE="$arg"
+            fi
+        done
+esac
+
+start_Session
+
+exit 0

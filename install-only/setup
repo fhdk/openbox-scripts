@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# this script will setup configs for any user created from /etc/skel
+# if this is not run immediately at startup, polybar WILL fail to load
+
+files=("$HOME/.config/polybar/config"
+       "$HOME/.config/polybar/sessions/i3-sessionfile"
+       "$HOME/.config/polybar/sessions/bspwm-sessionfile"
+       "$HOME/.config/polybar/sessions/openbox-sessionfile"
+       "$HOME/.config/openbox/autostart"
+       "$HOME/.config/gtk-3.0/bookmarks"
+       "$HOME/.mozilla/firefox/manjaro-openbox.default/prefs.js"
+       "$HOME/.mozilla/firefox/manjaro-openbox.default/sessionstore.js"
+       )
+
+for f in "${files[@]}"; do
+    sed -i "s/liveuser/${USER}/g" "$f"
+done
+
+sed -i '/setup/d' "$HOME/.config/openbox/autostart"
+rm -f "$HOME/.config/setup"
