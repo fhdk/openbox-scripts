@@ -12,9 +12,9 @@ HELP="manjaro-polybar-edit:
 \nOptions:
 \t-h --help   show this message
 \tNo other options are supported.
-\nPolybar files must be in $POLYBARPATH
+\nPolybar files must be in $PPATH
 Checkmarked configs will be opened in a text editor"
-FILES=($(find "$PPATH" -maxdepth 4 -type f))
+FILES=($(find -L "$PPATH" -maxdepth 4 -type f))
 
 case "$@" in
     -h|--help)
@@ -30,9 +30,9 @@ edit_Configs() {
         fi
     done
     ANSWER=$(zenity $WINICON --list --title="$TITLE" \
-                     --text="<big>Select Polybar Configs or Scripts to edit</big>\n\n" \
-                     --checklist --width=450 --height=500 --multiple \
-                     --column="Select" --column="File Name" $LIST --separator=" ")
+        --text="<big>Select Polybar Configs or Scripts to edit</big>\n\n" \
+        --checklist --width=450 --height=500 --multiple \
+        --column="Select" --column="File Name" $LIST --separator=" ")
     if [[ $? == 1 ]]; then
         exit 0
     else

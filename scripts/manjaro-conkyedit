@@ -6,7 +6,7 @@
 
 TITLE="Manjaro Conky Edit"
 ICON="--window-icon=/usr/share/icons/hicolor/scalable/apps/manjaro.svg"
-FILES=($(find "$HOME/.config/conky" -maxdepth 4 -type f))
+FILES=($(find -L "$HOME/.config/conky" -maxdepth 4 -type f))
 
 for f in "${FILES[@]}"; do
     name=$(basename "$f")

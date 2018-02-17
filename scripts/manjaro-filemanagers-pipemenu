@@ -13,8 +13,12 @@ FAIL_MSG="No Apps Installed"
 
 # make sure these two arrays are the same amount of items
 # if not things will go wrong and you will have blank space
-CMD=(thunar pcmanfm spacefm caja nautilus nemo dolphin file-roller xarchiver)
-DESC=(Thunar PCmanFM SpaceFM Caja Nautilus Nemo Dolphin "File Roller" xArchiver)
+CMD=(catfish thunar pcmanfm spacefm caja nautilus nemo dolphin
+     etcher file-roller xarchiver
+     )
+DESC=(Catfish Thunar PCmanFM SpaceFM Caja Nautilus Nemo Dolphin
+      Etcher "File Roller" xArchiver
+      )
 
 # source lib file
 if ! . "/usr/lib/manjaro-openbox/common/manjaro-include.cfg" 2> /dev/null; then

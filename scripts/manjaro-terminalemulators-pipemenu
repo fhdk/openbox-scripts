@@ -15,7 +15,8 @@ FAIL_MSG="No Apps Installed"
 # if not things will go wrong and you will have blank space
 CMD=(terminator tilda tilix urxvt st termite xfce4-terminal xterm)
 DESC=(Terminator Tilda Tilix Rxvt-Unicode "Suckless Terminal" Termite
-      Xfce4-terminal Xterm)
+      Xfce4-terminal Xterm
+      )
 
 # source lib file
 if ! . "/usr/lib/manjaro-openbox/common/manjaro-include.cfg" 2> /dev/null; then

@@ -162,9 +162,9 @@ done
 [[ ${missing_commands[0]} ]] && error_exit "This script requires the following commands: ${missing_commands[*]}
 Please install the packages containing the missing commands and rerun the script."
 
-
-$QUESTION --text="<big>Click 'OK' to pick a conky</big>\n\nThen use the 'xwininfo' cursor\non the chosen conky to record its position." \
-          --height=200 --width=300 --ok-label=OK --cancel-label=Cancel
+$QUESTION --text="<big>Click 'OK' to pick a conky</big>
+\nThen use the 'xwininfo' cursor\non the chosen conky to record its position." \
+    --height=200 --width=300 --ok-label=OK --cancel-label=Cancel
 
 if (( $? == 0 )); then
     getStart

@@ -48,7 +48,7 @@ for i in "${window_Managers[@]}"; do
         WM=$i && break
     elif [[ "$(xprop -root -notype | grep "WM_NAME =" | tr -d '"' | awk '{print tolower($3)}')" == "$i" ]]; then
         WM=$i && break
-    elif [[ "$(awk '{print tolower($0)}' <<< $XDG_CURRENT_DESKTOP)" == "$i" ]]; then
+    elif [[ "$(awk '{print tolower($0)}' <<< "$XDG_CURRENT_DESKTOP")" == "$i" ]]; then
         WM=$i && break
     fi
 done
@@ -90,7 +90,8 @@ start_Session() {
             if [[ -f "$c" ]]; then tint2 -c "$c" && sleep 0.2; fi
         done < "$SESSIONFILE"
     else
-        echo -e "No suitable sessions found\n\nTry running manjaro-tint2zen or manjaro-panel chooser to setup a session"
+        echo -e "No suitable sessions found
+        \nTry running manjaro-tint2zen or manjaro-panel chooser to setup a session"
     fi
     sleep 1.5
     if ! [[ "$(pidof tint2)" ]] && hash manjaro-tint2zen &>/dev/null; then

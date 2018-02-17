@@ -42,13 +42,13 @@ if ! . "$MANJARO_COMMON_LIBDIR/manjaro-include.cfg" &>/dev/null; then
     echo "Error: Failed to source manjaro-include.cfg in $MANJARO_COMMON_LIBDIR"
     exit 1
 fi
-# if [ ! -e "$CSESSIONFILE" ] &>/dev/null ; then
-#     echo "Error: Failed to locate conky-sessionfile in $CONKYPATH" >&2
-#     echo "conky -c $HOME/.config/conky/AL-Default.conkyrc & sleep 1" > "$CSESSIONFILE"
-# fi
-# if [ ! -e "$SESSIONS" ] &>/dev/null ; then
-#     echo "$0: Failed to locate saved-sessions in $CONKYPATH" >&2
-# fi
+if [ ! -e "$CSESSIONFILE" ] &>/dev/null ; then
+    echo "Error: Failed to locate conky-sessionfile in $CONKYPATH" >&2
+    echo "conky -c $HOME/.config/conky/AL-Default.conkyrc & sleep 1" > "$CSESSIONFILE"
+fi
+if [ ! -e "$SESSIONS" ] &>/dev/null ; then
+    echo "$0: Failed to locate saved-sessions in $CONKYPATH" >&2
+fi
 
 declareDependencies zenity
 

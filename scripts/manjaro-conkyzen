@@ -28,7 +28,7 @@ USAGE="\vUSAGE:\tmanjaro-conkyzen [OPTION]...FILES
 QUESTION="zenity --question --window-icon=/usr/share/icons/hicolor/scalable/apps/manjaro.svg"
 TITLE="Manjaro Conky Manager"
 ICON="--window-icon=/usr/share/icons/hicolor/scalable/apps/manjaro.svg"
-FILES=("$(find "$CPATH" -maxdepth 4 -type f)")
+FILES=($(find -L "$CPATH" -maxdepth 4 -type f))
 
 
 ########################### Find Conkys
@@ -71,7 +71,7 @@ write_Sessions() {
     if grep -qx "$SFILE" "$SESSIONS"; then
         if [[ $2 = "-z" ]]; then
             $QUESTION --title="Conky sessionfile" $ICON --width=250 --height=100 \
-                      --text="<big>Filename already in use</big>\n\nOverwrite it?" &>/dev/null
+                --text="<big>Filename already in use</big>\n\nOverwrite it?" &>/dev/null
             if [[ $? == 1 ]]; then exit 0; fi
         else
             echo "Session was previously saved with the same name. Overwrite it? (y|N)"
@@ -87,16 +87,16 @@ write_Sessions() {
 choose_Conkys() {
     while ! [[ "$ANSWER" ]]; do
         ANSWER=$(zenity $ICON --list --title="$TITLE" --separator=" " \
-                     --text="<big>Session will be saved to:</big>\n\n <b>$SFILE</b>\n" \
-                     --checklist --width=450 --height=500 --multiple \
-                     --column="Select" --column="Conky Name" $LIST)
+            --text="<big>Session will be saved to:</big>\n\n <b>$SFILE</b>\n" \
+            --checklist --width=450 --height=500 --multiple \
+            --column="Select" --column="Conky Name" $LIST)
         if [[ $? == 1 ]]; then
             if [[ -f $SESSIONS.bkp ]]; then mv "$SESSIONS.bkp" "$SESSIONS"; fi
             ANSWER="None"
         elif ! [[ "$ANSWER" ]]; then
             $QUESTION --title="$TITLE" --width=250 --height=100 \
-                      --text="<big>No Conky Selected</big>\n\nClose all running Conkys and exit?" \
-                      --cancel-label="Go Back" &>/dev/null
+                --text="<big>No Conky Selected</big>\n\nClose all running Conkys and exit?" \
+                --cancel-label="Go Back" &>/dev/null
             if [[ $? = 1 ]]; then
                 if [[ -f $SESSIONS.bkp ]]; then mv $SESSIONS.bkp $SESSIONS; fi
                 unset ANSWER
@@ -107,7 +107,7 @@ choose_Conkys() {
         else
             echo -n > "$SFILE"
             if [[ $(pidof conky) ]]; then killall conky; fi
-            for n in "${ANSWER[@]}"; do
+            for n in $ANSWER; do
                 for f in "${FILES[@]}"; do
                     if [[ $(basename "$f") = "$n" ]]; then
                         echo -e "conky -c $f & sleep 0.5" >> "$SFILE"
@@ -137,11 +137,11 @@ case $1 in
         ;;
     -z)
         ENTRY=$(zenity $ICON --entry --width=350 --height=200 --title="Save Conky sessionfile" \
-                       --entry-text="New Session Name" --text="File to be saved in\n\n$CPATH/\n")
+            --entry-text="New Session Name" --text="File to be saved in\n\n$CPATH/\n")
         if [[ $? == 1 ]]; then exit 0; fi
         if [[ -z $ENTRY ]]; then
             zenity --info $ICON --title="Conky sessionfile" --width=200 --height=100 \
-                   --text="No File Specified Exiting..." &>/dev/null && exit 1
+                --text="No File Specified Exiting..." &>/dev/null && exit 1
         else
             write_Sessions "$ENTRY" "-z"
         fi

@@ -160,7 +160,8 @@ setup_dock() {
         setup
         dock=$(zenity --list --checklist --multiple $ICON --title="$TITLE" \
             --text="<big><b>Please Choose Docks to Setup</b></big>
-        \nRunning docks will be checkmarked\nTo disable a running dock:\n\n\tUn-checkmark it and press Ok\n" \
+            \nRunning docks will be checkmarked\nTo disable a running dock:
+            \n\tUn-checkmark it and press Ok\n" \
             --width=350 --height=400 --column="Select" --column="Dock" $DOCKS \
             --cancel-label="Go Back" --ok-label="Ok" --separator=" ")
         if [[ $? == 1 ]]; then unset dock choice; break; fi

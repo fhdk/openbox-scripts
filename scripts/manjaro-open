@@ -15,7 +15,7 @@ help="\n  Usage: manjaro-focus [option]  available options\n
 -music  - runs default music player"
 
 
-if [[ "$@" == *web* ]]; then
+if [[ "$*" == *web* ]]; then
     # try to find browser already open
     fire_fox=$(wmctrl -l | grep -i "Firefox" | cut -d " " -f3 | head -n1)
     chro_me=$(wmctrl -l | grep -i "Chrome" | cut -d " " -f3 | head -n1)
@@ -44,7 +44,7 @@ if [[ "$@" == *web* ]]; then
         exit 0
     fi
 
-elif [[ "$@" == *file* ]]; then
+elif [[ "$*" == *file* ]]; then
     # try to find file manager already open
     file_desktop=$(wmctrl -l | grep -i "File" | cut -d " " -f3 | head -n1)
     # if file manager exists go to that desktop
@@ -56,7 +56,7 @@ elif [[ "$@" == *file* ]]; then
         exit 0
     fi
 
-elif [[ "$@" == *term* ]]; then
+elif [[ "$*" == *term* ]]; then
     # try to find terminals already open
     terminal_desktop=$(wmctrl -l | grep -i "${USER}@" | cut -d " " -f3 | head -n1)
     # if terminal exists go to that desktop
@@ -68,7 +68,7 @@ elif [[ "$@" == *term* ]]; then
         exit 0
     fi
 
-elif [[ "$@" == *music* ]]; then
+elif [[ "$*" == *music* ]]; then
     # try to find music players already open
     lolly_pop=$(wmctrl -l | grep -i "lollypop" | cut -d " " -f3 | head -n1)
     rythm_box=$(wmctrl -l | grep -i "rythmbox" | cut -d " " -f3 | head -n1)
@@ -97,7 +97,7 @@ elif [[ "$@" == *music* ]]; then
         exit 0
     fi
 
-elif [[ "$@" == *edit* ]]; then
+elif [[ "$*" == *edit* ]]; then
     # try to find editor already open
     mouse_pad=$(wmctrl -l | grep -i "mousepad" | cut -d " " -f3 | head -n1)
     at_om=$(wmctrl -l | grep -i "atom" | cut -d " " -f3 | head -n1)
@@ -125,7 +125,7 @@ elif [[ "$@" == *edit* ]]; then
         wmctrl -xa $TEXT_EDITOR
         exit 0
     fi
-elif [[ "$@" == *h* ]]; then
+elif [[ "$*" == *h* ]]; then
     clear
     echo -e $help
 else

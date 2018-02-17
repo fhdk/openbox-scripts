@@ -27,15 +27,13 @@ HELP='\tmanjaro-polybar-pipemenu an Openbox Pipe Menu for Polybar
 and "Help">"Polybar" in the Manjaro menu.'
 
 case "$@" in
-    -h|--help)
-        echo -e "$HELP"
-        exit 0
+    -h|--help) echo -e "$HELP" ; exit 0
 esac
 
 MANJARO_COMMON_LIBDIR='/usr/lib/manjaro-openbox/common'
 CPATH="$HOME/.config/polybar"
 CONFIG="$CPATH/config"
-if ! . "$MANJARO_COMMON_LIBDIR/manjaro-include.cfg" 2> /dev/null; then
+if ! . "$MANJARO_COMMON_LIBDIR/manjaro-include.cfg" 2>/dev/null; then
     echo $"Error: Failed to source manjaro-include.cfg in $MANJARO_COMMON_LIBDIR"
     exit 1
 fi
@@ -65,7 +63,7 @@ Editmenu() {
 Configs() {
     menuSubmenu "EditConfigs" "Edit Configs"
     if type manjaro-polybar-edit &>/dev/null; then
-        menuItem "Edit Polybar Configs" "manjaro-polybar-edit"
+        menuItem "Edit Configs" "manjaro-polybar-edit"
     fi
     Editmenu
     menuSubmenuEnd
@@ -73,16 +71,20 @@ Configs() {
 
 Launchmenu() {
     if type manjaro-polybar-session &>/dev/null && [[ -f "$HOME/.config/polybar/sessions/openbox-sessionfile" ]]; then
-        menuItem "Start Polybar Session" "manjaro-polybar-session"
+        if [[ $(pidof polybar) ]]; then
+            menuItem "Restart Polybar" "manjaro-polybar-session"
+        else
+            menuItem "Start Polybar" "manjaro-polybar-session"
+        fi
     fi
     if type manjaro-polyzen &>/dev/null; then
-        menuItem "Polybar Session GUI" "manjaro-polyzen"
+        menuItem "Polybar GUI" "manjaro-polyzen"
     fi
 }
 
 Killmenu() {
     if [[ "$(pidof polybar)" ]]; then
-        menuItem "Stop All Bars" "pkill polybar"
+        menuItem "Stop Bars" "pkill polybar"
     fi
 }
 

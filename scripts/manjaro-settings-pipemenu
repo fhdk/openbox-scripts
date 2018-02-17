@@ -14,10 +14,13 @@ FAIL_MSG="No Apps Installed"
 # make sure these two arrays are the same amount of items
 # if not things will go wrong and you will have blank space
 CMD=(manjaro-panel-chooser arandr nitrogen oomox-gui pamac-manager pavucontrol
-     wpg rofi-theme-selector xfce4-power-manager-settings
-     xfce4-appearance-settings xfce4-settings-manager)
-DESC=("Panel Chooser" "Screen Settings" Wallpaper Oomox "Package Manager" "Audio Settings"
-      wpgtk "Rofi Theme" "Power Manager" "Settings Manager" "Gtk Theme")
+     gnome-system-monitor wpg rofi-theme-selector xfce4-power-manager-settings
+     gnome-disk-utility xfce4-appearance-settings xfce4-settings-manager
+     )
+DESC=("Panel Chooser" "Screen Settings" Wallpaper Oomox "Package Manager"
+      "Audio Settings" "System Monitor" wpgtk "Rofi Theme" "Power Manager"
+      "Disk Uitlity" "Gtk Theme" "Settings Manager"
+      )
 
 # source lib file
 if ! . "/usr/lib/manjaro-openbox/common/manjaro-include.cfg" 2> /dev/null; then

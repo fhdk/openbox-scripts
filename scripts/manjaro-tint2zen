@@ -29,12 +29,12 @@ fi
 # This should be pretty failsafe, first checking wmctrl
 # otherwise falling back to other more common means of getting WM name
 window_Managers=(bspwm i3 openbox xfce awesome)
-for i in ${window_Managers[@]}; do
+for i in "${window_Managers[@]}"; do
     if [[ "$(wmctrl -m | grep -i name | awk '{print tolower($2)}')" == "$i" ]]; then
         WM=$i && break
     elif [[ "$(xprop -root -notype | grep "WM_NAME =" | tr -d '"' | awk '{print tolower($3)}')" == "$i" ]]; then
         WM=$i && break
-    elif [[ "$(awk '{print tolower($0)}' <<< $XDG_CURRENT_DESKTOP)" == "$i" ]]; then
+    elif [[ "$(awk '{print tolower($0)}' <<< "$XDG_CURRENT_DESKTOP")" == "$i" ]]; then
         WM=$i && break
     fi
 done
@@ -50,7 +50,7 @@ USAGE="USAGE: [OPTIONS] [SESSIONFILE]
 \n\t\t'$CONFPATH/sessions/$WM-sessionfile'
 \nTo start session at login, add the following line to autostart:
 \tsleep 1; manjaro-tint2-session &"
-FILES=($(find $CONFPATH -maxdepth 4 -type f))
+FILES=($(find -L "$CONFPATH" -maxdepth 4 -type f))
 
 # If $WM is set, set sessionfile to $WM-sessionfile
 # Otherwise default to just sessionfile
@@ -86,12 +86,12 @@ if [[ "$(pidof tint2)" ]]; then
     TEMPFILE=$(mktemp --tmpdir tint2.XXXX)
     while read pid cmd; do
         if [[ ${cmd%% *} = tint2 ]]; then
-            echo "$(awk '{print $NF}' <<< $cmd)" >> $TEMPFILE
+            echo "$(awk '{print $NF}' <<< "$cmd")" >> $TEMPFILE
         fi
     done <<< "$(pgrep -a tint2)"
 fi
 
-for f in ${FILES[@]}; do
+for f in "${FILES[@]}"; do
     NAME=$(basename "$f")
     if [[ $NAME = *tintrc ]] || grep -q "panel_monitor" "$f"; then
         if [[ -e $TEMPFILE ]] && grep -q "$f" "$TEMPFILE"; then
@@ -105,20 +105,21 @@ done
 
 setup_Session() {
     mkdir -p $CONFPATH/sessions; echo -e "# Tint2 $WM Sessionfile
-    \n# DO NO edit this file, it will be overwritten by manjaro-tint2zen\n# Make a custom sessionfile instead and use -z or --session FILE option
+    \n# DO NO edit this file, it will be overwritten by manjaro-tint2zen
+    \n# Make a custom sessionfile instead and use -z or --session FILE option
     \n# To load session at startup use the following line\n\n# manjaro-tint2-session &\n" > $SESSIONFILE
-    for name in ${ANSWER[@]}; do
-        for file in ${FILES[@]}; do
-            if grep -q "$file" $SESSIONFILE; then continue; fi
-            if [[ $(basename "$file") == $name ]]; then echo -e "$file" >> $SESSIONFILE; fi
+    for name in $ANSWER; do
+        for file in "${FILES[@]}"; do
+            if grep -q "$file" "$SESSIONFILE"; then continue; fi
+            if [[ $(basename "$file") == "$name" ]]; then echo -e "$file" >> "$SESSIONFILE"; fi
         done
     done
 
     while [[ $(pidof tint2) ]]; do pkill tint2; sleep 0.2; done
     while read -r c; do
-        if [[ "$c" =~ ^#.*$ ]] || [[ "$c" =~ '^[ \t]*$' ]] || [[ "$c" == "" ]] || ! [ -f "$c" ]; then continue; fi
+        if [[ "$c" =~ ^#.*$ ]] || [[ "$c" == "" ]] || ! [ -f "$c" ]; then continue; fi
         tint2 -c "$c" &>/dev/null &
-    done < $SESSIONFILE
+    done < "$SESSIONFILE"
     if hash manjaro-compositor &>/dev/null; then manjaro-compositor --restart; fi
 }
 
@@ -126,24 +127,24 @@ setup_Session() {
 # Run main selection dialog
 while ! [[ $ANSWER ]]; do
     ANSWER=$(zenity $ICON --list --title="$TITLE" --text="<big><b>Select Tint2 Panels to Launch</b></big>
-                          \nRunning panels will be checkmarked\nTo stop a running panel:\n\n\tUn-checkmark it and press Ok" \
-                              --checklist --width=350 --height=400 --multiple --column="Select" \
-                              --column="Tint2" $LIST --separator=" ")
+    \nRunning panels will be checkmarked\nTo stop a running panel:\n\n\tUn-checkmark it and press Ok" \
+        --checklist --width=350 --height=400 --multiple --column="Select" \
+        --column="Tint2" $LIST --separator=" ")
     if [[ $? == 1 ]]; then
         ANSWER="None"; exit 0
     elif ! [[ $ANSWER ]]; then
         SURE=$(zenity $ICON --title="$TITLE" --question --width=300 --height=150 --cancel-label="Go Back" \
-                      --text="<big><b>No Panels Selected</b></big>\n\nClose all running panels and exit?" &>/dev/null)
+            --text="<big><b>No Panels Selected</b></big>\n\nClose all running panels and exit?" &>/dev/null)
         if [[ $? == 1 ]]; then
             unset ANSWER && continue
         else
             while [[ $(pidof tint2) ]]; do pkill tint2; sleep 0.2; done
-            > $SESSIONFILE; ANSWER="None"
+            echo "" > "$SESSIONFILE"; ANSWER="None"
         fi
     else
         setup_Session
     fi
-    if [[ -e $TEMPFILE ]]; then rm -f $TEMPFILE; fi
+    if [[ -e $TEMPFILE ]]; then rm -f "$TEMPFILE"; fi
 done
 
 exit 0

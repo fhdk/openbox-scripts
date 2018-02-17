@@ -22,13 +22,12 @@ src() {
     fi
 }
 
-# clear logfile
 initialize() {
+    # clear logfile
     echo "" > "$LOG"
 
-
     # Remove itself from autostart
-    if [ -e "$HOME/.config/openbox/autostart" ] && grep -q 'manjaro-hello' "$HOME/.config/openbox/autostart"; then
+    if [[ -e $HOME/.config/openbox/autostart ]] && grep -q 'manjaro-hello' "$HOME/.config/openbox/autostart"; then
         sed -i '/manjaro-hello/d' "$HOME/.config/openbox/autostart"
     fi
 
@@ -110,7 +109,7 @@ configure() {
 
 # Nvidia Drivers... Call this last as to not conflict with other package managers installing
 nvidiaInstallation() {
-    if ! [ -z "${NV}" ]; then
+    if ! [[ -z $NV ]]; then
         create_Dialog nvd "${g}Nvidia Graphics Detected.${reg}\tWant to install drivers"
         if grep -q '[yY1]' <<< "$nvd"; then
             nvidia-easy-install
