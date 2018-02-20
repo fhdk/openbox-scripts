@@ -16,8 +16,8 @@ FAIL_MSG="No Apps Installed"
 CMD=(chromium chromium-snapshot-bin firefox firefox-developer-edition google-chrome-stable opera qutebrowser vivaldi vivaldi-snapshot)
 DESC=(Chromium "Chromium Snapshot" Firefox "Firefox-Dev" "Google Chrome" Opera qutebrowser Vivaldi "Vivaldi-Snapshot")
 # source lib file
-if ! . "/usr/lib/manjaro-openbox/common/manjaro-include.cfg" 2> /dev/null; then
-    echo -e "[ERROR]: Failed to source /usr/lib/manjaro-openbox/common/manjaro-include.cfg"
+if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2> /dev/null; then
+    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg"
     exit 1
 fi
 

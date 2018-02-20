@@ -17,8 +17,8 @@ CMD=(audacious clementine guvcview lollypop rhythmbox spotify vlc mpv gnome-mpv 
 DESC=(Audacious "Clementine Music Player" guvcview Lollypop Rhythmbox Spotify VLC MPV Gnome-MPV Sonata Cantata)
 
 # source lib file
-if ! . "/usr/lib/manjaro-openbox/common/manjaro-include.cfg" 2> /dev/null; then
-    echo -e "[ERROR]: Failed to source /usr/lib/manjaro-openbox/common/manjaro-include.cfg"
+if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2> /dev/null; then
+    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg"
     exit 1
 fi
 

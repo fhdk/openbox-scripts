@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-MANJARO_COMMON_LIBDIR='/usr/lib/manjaro-openbox/common'
+MANJARO_COMMON_LIBDIR='/usr/lib/manjaro/common'
 TINT2PATH="$HOME/.config/tint2"
 TINT2RC="$TINT2PATH/tint2rc"
 TZEN="manjaro-tint2zen"

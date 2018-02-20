@@ -21,7 +21,7 @@
 
 EXECXCOMP='compton -b'
 RESTART_ATTEMPTS=20
-MANJARO_COMMON_LIBDIR='/usr/lib/manjaro-openbox/common'
+MANJARO_COMMON_LIBDIR='/usr/lib/manjaro/common'
 HELP='    manjaro-compositor an Openbox Pipe Menu for use with compton compositor
     It should normally be called from an openbox menu.
 

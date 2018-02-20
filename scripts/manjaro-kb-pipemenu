@@ -33,14 +33,14 @@ HELP='\tmanjaro-kb-pipemenu an Openbox Pipe Menu for displaying keybinds
 \nIf manjaro-keyboard-pipemenu is called with no options (the usual method),
 it will output an xml openbox pipemenu for displaying keybindings.
 \tNOTE: Some of the functionality of this pipemenu depends on the script
-/usr/bin/manjaro-kb which is provided by the package "manjaro-openbox-utilities"'
+/usr/bin/manjaro-kb which is provided by the package "manjaro-utilities"'
 case "$@" in
     -h|--help)
         echo -e "$HELP"
         exit 0
 esac
 
-MANJARO_COMMON_LIBDIR="/usr/lib/manjaro-openbox/common"
+MANJARO_COMMON_LIBDIR="/usr/lib/manjaro/common"
 USR_CFG_DIR="$HOME/.config/openbox"
 KBSCRIPT="manjaro-kb"
 RCPATH="$USR_CFG_DIR/rc.xml"

@@ -32,7 +32,7 @@ for i in "$@"; do
     esac
 done
 
-MANJARO_COMMON_LIBDIR='/usr/lib/manjaro-openbox/common'
+MANJARO_COMMON_LIBDIR='/usr/lib/manjaro/common'
 
 if ! . "$MANJARO_COMMON_LIBDIR/manjaro-include.cfg" 2> /dev/null; then
     echo $"Error: Failed to source manjaro-include.cfg in $MANJARO_COMMON_LIBDIR" >&2
@@ -41,14 +41,14 @@ fi
 
 menuStart
 menuSeparator 'ARCHLABS LINUX ONLINE'
-menuItem 'Manjaro Homepage' 'exo-open "https://manjaro-openboxblog.wordpress.com/"'
+menuItem 'Manjaro Homepage' 'exo-open "https://manjaroblog.wordpress.com/"'
 menuItem 'Manjaro Reddit' 'exo-open "https://www.reddit.com/r/ManjaroLinux/"'
-menuItem 'Manjaro Forum' 'exo-open "https://www.tapatalk.com/groups/manjaro-openbox/index.php"'
+menuItem 'Manjaro Forum' 'exo-open "https://www.tapatalk.com/groups/manjaro/index.php"'
 menuItem 'Manjaro Google+' 'exo-open "https://plus.google.com/u/0/communities/111177505820810068511"'
 
 menuSeparator 'ARCHLABS LINUX HELP'
-menuItem 'Forum Basic Help & Support' 'exo-open "http://manjaro-openbox.prophpbb.com/forum7.html"'
-menuItem 'Scripts, Tutorials & Tips' 'exo-open "https://www.tapatalk.com/groups/manjaro-openbox/configs-scripts-tutorials-and-tips-f13/"'
+menuItem 'Forum Basic Help & Support' 'exo-open "http://manjaro.prophpbb.com/forum7.html"'
+menuItem 'Scripts, Tutorials & Tips' 'exo-open "https://www.tapatalk.com/groups/manjaro/configs-scripts-tutorials-and-tips-f13/"'
 
 menuSeparator 'GUIDES'
 

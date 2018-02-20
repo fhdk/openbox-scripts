@@ -16,21 +16,21 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-MANJARO_COMMON_LIBDIR='/usr/lib/manjaro-openbox/common'
+MANJARO_COMMON_LIBDIR='/usr/lib/manjaro/common'
 CONKYDEFAULT="$HOME/.config/conky/Manjaro.conkyrc"
 CONKYPATH="$HOME/.config/conky"
 CSESSIONFILE="$CONKYPATH/conky-sessionfile"
 SESSIONS="$CONKYPATH/saved-sessions"
 CZEN="manjaro-conkyzen"
 CSESSION="manjaro-conky-session"
-HELPFILE="/usr/share/manjaro-openbox/docs/helpfile-conkyzen.txt"
+HELPFILE="/usr/share/manjaro/docs/helpfile-conkyzen.txt"
 HELP='\tmanjaro-conky-pipemenu an Openbox Pipe Menu for use with conky
 \tIt should normally be called from an openbox menu.
 \nOptions:
 \t-h --help   show this message
 tIf manjaro-conky-pipemenu is called with no options (the usual method),
 tit will output an xml openbox pipemenu for handling conky sessions.
-\nSee /usr/share/manjaro-openbox/docs/helpfile-conkyzen.txt and "man conky"
+\nSee /usr/share/manjaro/docs/helpfile-conkyzen.txt and "man conky"
 for more information'
 case "$@" in
     -h|--help)

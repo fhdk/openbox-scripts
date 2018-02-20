@@ -8,15 +8,15 @@
 
 err() {
     local msg=$1
-    echo -e "[ERROR]:\tThis program requires /usr/lib/manjaro-openbox/common/$msg to work properly"
+    echo -e "[ERROR]:\tThis program requires /usr/lib/manjaro/common/$msg to work properly"
     exit 1
 }
 
 # source first lib file
 # this MUST be done first to get access to the draw_box and create_Dialog functions
 src() {
-    if [ -f "/usr/lib/manjaro-openbox/common/manjaro-hello-lib" ]; then
-        source "/usr/lib/manjaro-openbox/common/manjaro-hello-lib"
+    if [ -f "/usr/lib/manjaro/common/manjaro-hello-lib" ]; then
+        source "/usr/lib/manjaro/common/manjaro-hello-lib"
     else
         err "manjaro-hello-lib"
     fi
@@ -65,13 +65,13 @@ update() {
 
 # Source lib files again after updating
 srcLib() {
-    if [ -f "/usr/lib/manjaro-openbox/common/manjaro-hello-lib" ]; then
-        source "/usr/lib/manjaro-openbox/common/manjaro-hello-lib"
+    if [ -f "/usr/lib/manjaro/common/manjaro-hello-lib" ]; then
+        source "/usr/lib/manjaro/common/manjaro-hello-lib"
     else
         err "manjaro-hello-lib"
     fi
-    if [ -f "/usr/lib/manjaro-openbox/common/manjaro-hello-installation" ]; then
-        source "/usr/lib/manjaro-openbox/common/manjaro-hello-installation"
+    if [ -f "/usr/lib/manjaro/common/manjaro-hello-installation" ]; then
+        source "/usr/lib/manjaro/common/manjaro-hello-installation"
     else
         err "manjaro-hello-installation"
     fi

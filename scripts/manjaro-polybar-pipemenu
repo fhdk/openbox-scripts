@@ -30,7 +30,7 @@ case "$@" in
     -h|--help) echo -e "$HELP" ; exit 0
 esac
 
-MANJARO_COMMON_LIBDIR='/usr/lib/manjaro-openbox/common'
+MANJARO_COMMON_LIBDIR='/usr/lib/manjaro/common'
 CPATH="$HOME/.config/polybar"
 CONFIG="$CPATH/config"
 if ! . "$MANJARO_COMMON_LIBDIR/manjaro-include.cfg" 2>/dev/null; then
