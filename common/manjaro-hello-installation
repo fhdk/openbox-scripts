@@ -1,152 +1,10 @@
 #!/usr/bin/env bash
 
 
-## This main installation portion, is sourced by manjaro-hello
-# this file is not meant to be executable or run by itself
+# This main installation portion is sourced by manjaro-hello
+# and is not meant to be executable or run by itself
 
-# called directly if chosen to install packages
-# takes no args, just make sure it is run after all dialogs
-setup_Default_Packages() {
-    install=("obmenu-generator" "perl-data-dump" "gtk2-perl" "perl-linux-desktopfiles")
-    package_Operation "$obmenu" "None"
-    install=("hexchat" "pidgin" "weechat" "irssi")
-    package_Operation "$irc"
-    install=("google-chrome" "chromium" "opera" "qutebrowser")
-    package_Operation "$browser" "$rmfirefox" "firefox"
-    install=("google-talkplugin")
-    package_Operation "$googletalk" "None"
-    install=("flashplugin")
-    package_Operation "$flash" "None"
-    install=("atom" "sublime-text-dev" "emacs" "mousepad")
-    package_Operation "$editor" "$rmgeany" "geany"
-    install=("tilix" "terminator" "rxvt-unicode" "tilda" "xfce4-terminal")
-    package_Operation "$terminals"
-    install=("pcmanfm" "nautilus" "nemo")
-    package_Operation "$filemanager" "$rmthunar" "thunar"
-    if ! grep -q '4' <<< "$window_manager"; then
-        install=("xfburn" "simpleburn" "k3b")
-        package_Operation "$burner"
-        install=("xfce4-power-manager")
-        package_Operation "$powermanager" "None"
-        install=("xfce4-notifyd")
-        package_Operation "$notify" "None" "dunst"
-        install=("pamac-aur")
-        package_Operation "$pamac" "None"
-    fi
-    install=("etcher" "mintstick-git" "unetbootin" "etcher-cli")
-    package_Operation "$usb"
-    install=("spotify" "nicotine" "lollypop" "rhythmbox" "clementine")
-    package_Operation "$music" "$rmaudacious" "audacious" "audacious-plugins"
-    install=("qt4" "vlc")
-    package_Operation "$vlc" "None" "mpv"
-    install=("gimp" "inkscape" "krita")
-    package_Operation "$image"
-    install=("simplescreenrecorder" "obs-studio" "guvcview" "peek")
-    package_Operation "$capture"
-    install=("kdenlive" "openshot" "lwks")
-    package_Operation "$video"
-    install=("libreoffice-still" "abiword" "calligra")
-    package_Operation "$office"
-    install=("thunderbird" "geary" "evolution" "mutt")
-    package_Operation "$mail"
-    install=("deluge" "transmission-gtk" "qbittorrent")
-    package_Operation "$torrent"
-    install=("gpick" "gcolor2")
-    package_Operation "$colorp"
-    install=("mpd" "cava" "s-tui" "slurm")
-    package_Operation "$termapps"
-    install=("dropbox")
-    package_Operation "$dropbox" "None"
-    install=("oomox" "wpgtk-git")
-    package_Operation "$oomox" "None"
-    install=("ttf-anonymous-pro" "ttf-font-awesome" "ttf-fira-code" "noto-fonts-emoji" "ttf-freefont")
-    package_Operation "$fonts" "None"
-    install=("nerd-fonts-complete")
-    package_Operation "$nfonts" "None"
-    install=("catfish")
-    package_Operation "$catsearch" "None"
-    install=("gnome-disk-utility" "gnome-system-monitor")
-    package_Operation "$gnomed" "None"
-    install=("plank" "docky" "cairo-dock")
-    package_Operation "$dock"
-    install=("evince" "zathura" "qpdfview" "mupdf")
-    package_Operation "$pdf"
-    install=("steam" "linux-steam-integration" "steam-native-runtime")
-    package_Operation "$steam" "None"
-}
-
-# called directly if choosing any window managers
-# takes no args, must be done after dialogs
-setup_Window_Manager() {
-    # send it al off to the package_Operation to install our choices
-    install=("awesome" "bspwm" "i3-gaps" "xfce4")
-    package_Operation "$window_manager"
-
-    # Make sure that the config directories exist for chosen wm
-    # for wm that arent chosen, remove their config from $HOME/.config
-    _names=("awesome" "bspwm" "i3" "xfce4")
-    for ((x=1; x<=${#_names[@]}; x++)); do
-        y=$((x - 1))  # Fix for counting from 1 & arrays indexing from 0
-        if grep -q "$x" <<< "$window_manager"; then
-            echo -e "\nChosen Window Manager:\t${_names[$y]}" >>"$LOG" 2>&1
-            if grep -q 'xfce4' <<< "${_names[$y]}"; then
-                if ! [ -d "$CONF_PATH/xfce4/manjaro-xfce-configs" ]; then
-                    echo -e "Getting Missing Configs:\t${_names[$y]}" >>"$LOG" 2>&1
-                    cp -rf /etc/skel/.config/xfce4/manjaro-xfce-configs "$CONF_PATH/xfce4/"
-                fi
-                cp -rf "$CONF_PATH"/xfce4/manjaro-xfce-configs/* "$CONF_PATH/xfce4/"
-                rm -rf "$CONF_PATH"/xfce4/manjaro-xfce-configs
-                xfconf-query -c xfce4-desktop -v --create -p /desktop-icons/style -t int -s 0
-            elif grep -q 'bspwm' <<< "${_names[$y]}"; then
-                echo -e "Getting Missing Configs:\t${_names[$y]}" >>"$LOG" 2>&1
-                if ! [ -d "$CONF_PATH/bspwm" ]; then
-                    cp -rf /etc/skel/.config/bspwm "$CONF_PATH/"
-                fi
-                if ! [ -d "$CONF_PATH/sxhkd" ]; then
-                    cp -rf /etc/skel/.config/sxhkd "$CONF_PATH/"
-                fi
-            elif ! [ -d "$CONF_PATH/${_names[$y]}" ]; then
-                echo -e "Getting Missing Configs:\t${_names[$y]}" >>"$LOG" 2>&1
-                cp -rf /etc/skel/.config/"${_names[$y]}" "$CONF_PATH/"
-            fi
-        elif [ -d "$CONF_PATH/${_names[$y]}" ]; then
-            echo -e "Removing Configs:\t\t${_names[$y]}" >>"$LOG" 2>&1
-            if grep -q 'bspwm' <<< "${_names[$y]}"; then
-                rm -rf "$CONF_PATH/${_names[$y]:?}"
-                if [ -d "$CONF_PATH/sxhkd" ]; then
-                    rm -rf "$CONF_PATH/.config/sxhkd"
-                fi
-            elif grep -q 'xfce4' <<< "${_names[$y]}"; then
-                if [ -d "$CONF_PATH/xfce4/manjaro-xfce-configs" ]; then
-                    rm -rf "$CONF_PATH/xfce4/manjaro-xfce-configs"
-                fi
-            else
-                rm -rf "$CONF_PATH/${_names[$y]:?}"
-            fi
-        fi
-    done
-
-    # Session setup
-    for ((x=1; x<=${#_sessions[@]}; x++)); do
-        y=$((x - 1))  # Fix for counting from 1 & arrays indexing from 0
-        if grep -q "$x" <<< "$session"; then
-            sudo sed -i "/user-session=/ c user-session=${_sessions[$y]}" /etc/lightdm/lightdm.conf
-            sudo sed -i "/autologin-session=/ c autologin-session=${_sessions[$y]}" /etc/lightdm/lightdm.conf
-            echo -e "\nChanging Login Session:\t${_sessions[$y]}" >>"$LOG" 2>&1
-            break
-        fi
-    done
-}
-
-# called by main_Dialogs if choosing defaults
-# must be called before trying to install or setup anything
 default_App_Dialogs() {
-    clear; echo -e "\n\n\n\tDuring the following steps you'll be asked to choose applications
-    \n\tEnter the matching number of the application(s) you want installed
-    \n\tAny combination of available apps can be picked\n\n\tJust enter their matching number(s) and press [${red}Enter${reg}]"
-    draw_box $R $C $H $W $col
-    read -n1 -rsp $'\n\n\tPress Any Key to Continue...\n\n'
-
     get=("Plank\t-  Stupidly simple"
          "Docky\t-  The finest dock no money can buy"
          "Cairo Dock\t-  Light, eye-candy filled dock and desklets")
@@ -164,10 +22,6 @@ default_App_Dialogs() {
         if ! [[ "$browser" == "1" ]] || ! grep -q '[yY1]' <<< "$rmfirefox"; then
             create_Dialog flash "Install Flash Plugin"
         fi
-        clear; echo -e "\n\n\n\tManjaro provides a local homepage ${b}~/.Manjaro-homepage/index.html${reg}
-        \n\tThis can be opened with a browser and set as the homepage if desired"
-        draw_box $R $C 8 $W $col
-        read -n1 -rsp $'\n\n\tPress Any Key to continue...\n\n'
     else
         create_Dialog flash "Install Flash Plugin"
     fi
@@ -185,11 +39,6 @@ default_App_Dialogs() {
          "Tilda\t-  A Gtk based drop down terminal for Linux and Unix"
          "XFCE4\t-  A terminal emulator primarly for the Xfce desktop")
     create_Dialog terminals "Available Terminal Emulators.. Termite is the default"
-    if  grep '3' <<< "$terminals"; then
-        clear; echo -e "\n\n\n\tYou can copy paste in urxvt with ${b}[Ctrl+Alt+c] [Ctrl+Alt+v]${reg}"
-        draw_box $R $C 8 $W $col
-        read -n1 -rsp $'\n\n\tPress Any Key to continue...\n\n'
-    fi
     get=("Spotify\t-  A proprietary music streaming service"
          "Nicotine+\t-  A graphical client for Soulseek"
          "Lollypop\t-  Lollypop is a new GNOME music playing application"
@@ -272,14 +121,12 @@ default_App_Dialogs() {
 
 }
 
-# Main function.. Asks user to install different things
-# conditions met will change which dialogs are available
 main_Dialogs() {
     # if not a VM, queue removal of virtualbox guest modules
     if [[ -z $VM ]] && sudo pacman -Qsq virtualbox &>/dev/null; then
-        clear; echo -e "\n\n\n\t${g}System is not a Virtual Machine
-        \n\tQueueing Removal of Virtualbox Guest Modules...${reg}"
-        draw_box $R $C 8 $W $col; echo -e "\n\n"; sleep 2
+        clear; echo -e "\n\n\n\t${GREEN}System is not a Virtual Machine
+        \n\tQueueing Removal of Virtualbox Guest Modules...$NORM"
+        draw_box 8 ; echo -e "\n\n"; sleep 2
         if [[ -e /etc/xdg/autostart/vboxclient.desktop ]]; then
             sudo rm -f /etc/xdg/autostart/vboxclient.desktop
         fi
@@ -336,9 +183,136 @@ main_Dialogs() {
 
 }
 
-# Should be run after all dialogs and setup are done
-# Loops lists queued for removal and installation of packages
-# First ensure base-devel is installed, then try pacman, if not fall back to yaourt
+setup_Default_Packages() {
+    install=("obmenu-generator" "perl-data-dump" "gtk2-perl" "perl-linux-desktopfiles")
+    package_Operation "$obmenu" "None"
+    install=("hexchat" "pidgin" "weechat" "irssi")
+    package_Operation "$irc"
+    install=("google-chrome" "chromium" "opera" "qutebrowser")
+    package_Operation "$browser" "$rmfirefox" "firefox"
+    install=("google-talkplugin")
+    package_Operation "$googletalk" "None"
+    install=("flashplugin")
+    package_Operation "$flash" "None"
+    install=("atom" "sublime-text-dev" "emacs" "mousepad")
+    package_Operation "$editor" "$rmgeany" "geany"
+    install=("tilix" "terminator" "rxvt-unicode" "tilda" "xfce4-terminal")
+    package_Operation "$terminals"
+    install=("pcmanfm" "nautilus" "nemo")
+    package_Operation "$filemanager" "$rmthunar" "thunar"
+    if ! grep -q '4' <<< "$window_manager"; then
+        install=("xfburn" "simpleburn" "k3b")
+        package_Operation "$burner"
+        install=("xfce4-power-manager")
+        package_Operation "$powermanager" "None"
+        install=("xfce4-notifyd")
+        package_Operation "$notify" "None" "dunst"
+        install=("pamac-aur")
+        package_Operation "$pamac" "None"
+    fi
+    install=("etcher" "mintstick-git" "unetbootin" "etcher-cli")
+    package_Operation "$usb"
+    install=("spotify" "nicotine" "lollypop" "rhythmbox" "clementine")
+    package_Operation "$music" "$rmaudacious" "audacious" "audacious-plugins"
+    install=("qt4" "vlc")
+    package_Operation "$vlc" "None" "mpv"
+    install=("gimp" "inkscape" "krita")
+    package_Operation "$image"
+    install=("simplescreenrecorder" "obs-studio" "guvcview" "peek")
+    package_Operation "$capture"
+    install=("kdenlive" "openshot" "lwks")
+    package_Operation "$video"
+    install=("libreoffice-still" "abiword" "calligra")
+    package_Operation "$office"
+    install=("thunderbird" "geary" "evolution" "mutt")
+    package_Operation "$mail"
+    install=("deluge" "transmission-gtk" "qbittorrent")
+    package_Operation "$torrent"
+    install=("gpick" "gcolor2")
+    package_Operation "$colorp"
+    install=("mpd" "cava" "s-tui" "slurm")
+    package_Operation "$termapps"
+    install=("dropbox")
+    package_Operation "$dropbox" "None"
+    install=("oomox" "wpgtk-git")
+    package_Operation "$oomox" "None"
+    install=("ttf-anonymous-pro" "ttf-font-awesome" "ttf-fira-code" "noto-fonts-emoji" "ttf-freefont")
+    package_Operation "$fonts" "None"
+    install=("nerd-fonts-complete")
+    package_Operation "$nfonts" "None"
+    install=("catfish")
+    package_Operation "$catsearch" "None"
+    install=("gnome-disk-utility" "gnome-system-monitor")
+    package_Operation "$gnomed" "None"
+    install=("plank" "docky" "cairo-dock")
+    package_Operation "$dock"
+    install=("evince" "zathura" "qpdfview" "mupdf")
+    package_Operation "$pdf"
+    install=("steam" "linux-steam-integration" "steam-native-runtime")
+    package_Operation "$steam" "None"
+}
+
+setup_Window_Manager() {
+    # Send it off package_Operation to install our choices
+    install=("awesome" "bspwm" "i3-gaps" "xfce4")
+    package_Operation "$window_manager"
+
+    # ensure config directories exist for WM remove ones that aren't chosen
+    _names=("awesome" "bspwm" "i3" "xfce4")
+    for ((x=1; x<=${#_names[@]}; x++)); do
+        y=$((x - 1))  # looping from 1 but arrays index from 0
+
+        if grep -q "$x" <<< "$window_manager"; then
+            echo -e "\nChosen Window Manager:\t${_names[$y]}" >>"$LOG" 2>&1
+            if grep -q 'xfce4' <<< "${_names[$y]}"; then
+                if ! [ -d "$CONF_PATH/xfce4/manjaro-xfce-configs" ]; then
+                    echo -e "Getting Missing Configs:\t${_names[$y]}" >>"$LOG" 2>&1
+                    cp -rf /etc/skel/.config/xfce4/manjaro-xfce-configs "$CONF_PATH/xfce4/"
+                fi
+                cp -rf "$CONF_PATH"/xfce4/manjaro-xfce-configs/* "$CONF_PATH/xfce4/"
+                rm -rf "$CONF_PATH"/xfce4/manjaro-xfce-configs
+                xfconf-query -c xfce4-desktop -v --create -p /desktop-icons/style -t int -s 0
+            elif grep -q 'bspwm' <<< "${_names[$y]}"; then
+                echo -e "Getting Missing Configs:\t${_names[$y]}" >>"$LOG" 2>&1
+                if ! [ -d "$CONF_PATH/bspwm" ]; then
+                    cp -rf /etc/skel/.config/bspwm "$CONF_PATH/"
+                fi
+                if ! [ -d "$CONF_PATH/sxhkd" ]; then
+                    cp -rf /etc/skel/.config/sxhkd "$CONF_PATH/"
+                fi
+            elif ! [ -d "$CONF_PATH/${_names[$y]}" ]; then
+                echo -e "Getting Missing Configs:\t${_names[$y]}" >>"$LOG" 2>&1
+                cp -rf /etc/skel/.config/"${_names[$y]}" "$CONF_PATH/"
+            fi
+        elif [ -d "$CONF_PATH/${_names[$y]}" ]; then
+            echo -e "Removing Configs:\t\t${_names[$y]}" >>"$LOG" 2>&1
+            if grep -q 'bspwm' <<< "${_names[$y]}"; then
+                rm -rf "$CONF_PATH/${_names[$y]:?}"
+                if [ -d "$CONF_PATH/sxhkd" ]; then
+                    rm -rf "$CONF_PATH/.config/sxhkd"
+                fi
+            elif grep -q 'xfce4' <<< "${_names[$y]}"; then
+                if [ -d "$CONF_PATH/xfce4/manjaro-xfce-configs" ]; then
+                    rm -rf "$CONF_PATH/xfce4/manjaro-xfce-configs"
+                fi
+            else
+                rm -rf "$CONF_PATH/${_names[$y]:?}"
+            fi
+        fi
+    done
+
+    # Session setup
+    for ((x=1; x<=${#_sessions[@]}; x++)); do
+        y=$((x - 1))  # looping from 1 but arrays index from 0
+        if grep -q "$x" <<< "$session"; then
+            sudo sed -i "/user-session=/ c user-session=${_sessions[$y]}" /etc/lightdm/lightdm.conf
+            sudo sed -i "/autologin-session=/ c autologin-session=${_sessions[$y]}" /etc/lightdm/lightdm.conf
+            echo -e "\nChanging Login Session:\t${_sessions[$y]}" >>"$LOG" 2>&1
+            break
+        fi
+    done
+}
+
 install_Selected_Packages() {
     sudo pacman -S base-devel --needed --noconfirm
     echo -e "\nInstall List:\t${Pkgs[*]}\nRemove List:\t${rPkgs[*]}" >>"$LOG" 2>&1
@@ -351,7 +325,7 @@ install_Selected_Packages() {
     for i in "${Pkgs[@]}"; do
         if pacman -Ssq ^"$i"$ &>/dev/null; then
             sudo pacman -S "$i" --needed --noconfirm
-        else  # else use yaourt.. for AUR packages
+        else
             if grep -q "linux-steam-integration" <<< "$i"; then  # special case to stop pgp bitching
                 yaourt --n-arg --skippgpcheck -S "$i" --needed --noconfirm
             else

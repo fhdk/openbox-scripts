@@ -6,56 +6,52 @@
 # this file is not meant to be executable or run by itself
 
 # paths
-BIN="/usr/bin"
-MENU="$HOME/.config/openbox/menu.xml"
-RC_PATH="$HOME/.config/openbox/rc.xml"
-AUTOSTART="$HOME/.config/openbox/autostart"
-HELPERS="$HOME/.config/xfce4/helpers.rc"
-MIMEAPP="$HOME/.config/mimeapps.list"
-CONF_PATH="$HOME/.config"
-LOG="$HOME/.manjaro-hello-log"
+readonly BIN="/usr/bin"
+readonly MENU="$HOME/.config/openbox/menu.xml"
+readonly RC_PATH="$HOME/.config/openbox/rc.xml"
+readonly AUTOSTART="$HOME/.config/openbox/autostart"
+readonly HELPERS="$HOME/.config/xfce4/helpers.rc"
+readonly MIMEAPP="$HOME/.config/mimeapps.list"
+readonly CONF_PATH="$HOME/.config"
+readonly LOG="$HOME/.manjaro-hello-log"
 
-# checks for hardware
-NV=$(grep -i "nvidia" <<< "$(lspci)")
-VM=$(grep -i "hypervisor" <<< "$(dmesg)")
+# hardware checks
+readonly NV=$(grep -i "nvidia" <<< "$(lspci)")
+readonly VM=$(grep -i "hypervisor" <<< "$(dmesg)")
 
-# box settings
-R=2 C=5 H=12 W=83 col=1
+# bash colour escapes
+readonly BLUE='\E[1;34m'
+readonly RED='\E[1;31m'
+readonly GREEN='\E[1;32m'
+readonly YELLOW='\E[1;33m'
+readonly NORM='\E[0m'
 
-# colour escapes for bash
-b='\E[1;34m' red='\E[1;31m' g='\E[1;32m'
-y='\E[1;33m' reg='\E[0m'
-
-# Draws our nice little box surrounding dialogs
-# Should be called after drawing the text
-# Takes a number of args being,
-# the starting row & column, the height & width, and the colour
 draw_box() {
-    HZ="-" VT="|" CN="+"
-    Ht=$((H - 1)) Wt=$((W - 1))
-    Rp=$((R + Ht)) Cp=$((C + Wt))
-    echo -ne "\E[3${col}m"
+    local HZ="-" VT="|" CN="+"
+    local H=${1:-12}                     # $1 Box Height
+    local W=${2:-83}                     # $2 Box Width
+    local R=${3:-2}                      # $3 Starting Row
+    local C=${4:-5}                      # $4 Starting Column
+    local CO=${5:-1}                     # $5 Box Color, 1 = red
+    local Ht=$((H - 1)) Wt=$((W - 1))    # Account for the corners
+    local Rp=$((R + Ht)) Cp=$((C + Wt))  # Account for start row & column
+    echo -ne "\E[3${CO}m"                # Set the colour for foreground
     plot_char() { echo -e "\E[${1};${2}H""$3"; }
-    i=1
-    for ((r=R; i<=Ht; r++)); do plot_char "$r" "$C" "$VT"; i=$((i + 1)); done
-    i=1
+    local i=1
+    for ((r=R; i<=Ht; r++)); do plot_char "$r" "$C"  "$VT"; i=$((i + 1)); done
+    local i=1
     for ((r=R; i<=Ht; r++)); do plot_char "$r" "$Cp" "$VT"; i=$((i + 1)); done
-    i=1
-    for ((c=C; i<=Wt; c++)); do plot_char "$R" "$c" "$HZ"; i=$((i + 1)); done
-    i=1
+    local i=1
+    for ((c=C; i<=Wt; c++)); do plot_char "$R" "$c"  "$HZ"; i=$((i + 1)); done
+    local i=1
     for ((c=C; i<=Wt; c++)); do plot_char "$Rp" "$c" "$HZ"; i=$((i + 1)); done
-    plot_char "$R"  "$C" "$CN" && plot_char "$R"  "$Cp" "$CN"
-    plot_char "$Rp" "$C" "$CN" && plot_char "$Rp" "$Cp" "$CN"
-    tput sgr0
+    plot_char "$R"  "$C" "$CN" ; plot_char "$R"  "$Cp" "$CN"
+    plot_char "$Rp" "$C" "$CN" ; plot_char "$Rp" "$Cp" "$CN"
+    tput sgr0  # Reset colours
 }
 
-# Creates a dialog using args passed
-# depending on size of list, adjust box height
-# special case for yes/no dialogs
-# Will loop itself until a proper is given
-# special 0 case to allow skipping multi choice
 create_Dialog() {
-    clear
+    clear ; local H
     case ${#get[@]} in
         7) H=23 ;;
         6) H=21 ;;
@@ -70,23 +66,23 @@ create_Dialog() {
         echo -e "\n\n\n\t$2\n"
 
         for ((n=1; n<=${#get[@]}; n++)); do
-            echo -e "\n\t${b}${n}${red}) ${reg}${get[$((n - 1))]}"
+            echo -e "\n\t${BLUE}${n}${RED}) ${NORM}${get[$((n - 1))]}"
         done
 
         if grep -q 'login session' <<< "$2"; then
-            echo -e "\n\t${b}0${red})${reg} Openbox\t-  Skip this step and stay with Openbox"
-            draw_box $R $C 12 $W $col; printf "\n\n: "
+            echo -e "\n\t${BLUE}0${RED})${NORM} Openbox\t-  Skip this step and stay with Openbox"
+            draw_box 12 ; printf "\n\n: "
         else
-            echo -e "\n\t${b}0${red})${reg}\t\t-  Skip This Step"
-            draw_box $R $C $H $W $col; printf "\n\n: "
+            echo -e "\n\t${BLUE}0${RED})${NORM}\t\t-  Skip This Step"
+            draw_box $H ; printf "\n\n: "
         fi
     else
         # 1 or less list is yes/no
-        printf "\n\n\n\t$2?  ${red}[${b}y${red}/${b}N${red}]${reg}: "
+        printf "\n\n\n\t$2?  ${RED}[${BLUE}y${RED}/${BLUE}N${RED}]${NORM}: "
         if grep -q 'Nvidia' <<< "$2"; then
-            draw_box $R $C $H $W $col; tput cup 3 $((${#2} + 10))
+            draw_box $H ; tput cup 3 $((${#2} + 10))
         else
-            draw_box $R $C $H $W $col; tput cup 3 $((${#2} + 18))
+            draw_box $H ; tput cup 3 $((${#2} + 18))
         fi
     fi
     read -r "$1"  # take input
@@ -97,42 +93,39 @@ create_Dialog() {
                 :  # No-op on success.. More code may go here in the future if needed
                 ;;
             n|N|NO|no|0|"")
-                clear; echo -e "\n\n\n\tSkipping Step.."
-                draw_box $R $C 8 $W $col; sleep 1
+                clear; echo -e "\n\n\n\tSkipping.."
+                draw_box 8 ; sleep 0.5
                 ;;
             *)
                 clear; echo -e "\n\n\n\tWrong Response
-                \n\tTo skip this step enter ${red}0 ${reg}or ${red}n${reg} or just ${b}[${red}Enter${b}]${reg}"
-                draw_box $R $C 8 $W $col; sleep 3
+                \n\tTo skip this step enter ${RED}0 ${NORM}or ${RED}n${NORM} or just ${BLUE}[${RED}Enter${BLUE}]${NORM}"
+                draw_box 8 ; sleep 3
                 create_Dialog "$1" "$2"
         esac
     elif grep -q "[1-${#get[@]}]" <<< "${!1}"; then
         : # No-op on success..  In the future I intend to move more code here if needed
     elif grep -q '[nN0]' <<< "${!1}" || [[ "${!1}" = "" ]]; then
-        clear; echo -e "\n\n\n\tSkipping Step.."
-        draw_box $R $C 8 $W $col; sleep 1
+        clear; echo -e "\n\n\n\tSkipping.."
+        draw_box 8 ; sleep 0.5
     else
         clear; echo -e "\n\n\n\tWrong Response
-        \n\tTo skip this step enter ${red}0 ${reg}or ${red}n${reg} or just ${b}[${red}Enter${b}]${reg}$e_msg"
-        draw_box $R $C 8 $W $col; sleep 3
+        \n\tTo skip this step enter ${RED}0 ${NORM}or ${RED}n${NORM} or just ${BLUE}[${RED}Enter${BLUE}]${NORM}$e_msg"
+        draw_box 8 ; sleep 3
         create_Dialog "$1" "$2"
     fi
     # logging responses in a nice format
-    echo -e "\nMain Question:\t$2\nPackage Array:\t${get[*]}\nTotal Options:\t${#get[@]}\nInput Name:\t$1\nUser Answer:\t${!1}" >>"$LOG" 2>&1
-    # reset everything
-    H=12
+    echo -e "\nMain Question:\t$2\nPackage Array:\t${get[*]}\nTotal Options:\t${#get[@]}
+Input Name:\t$1\nUser Answer:\t${!1}" >>"$LOG" 2>&1
     get=()
 }
 
-# depending on what is given add packages to list
-# special cases for apps that require touchups or additional packages installed to work properly
-# this function will write to the log: input values & attempts
 package_Operation() {
     clear
-    # check our answer was yes for single item lists
+    # check our answer was yes for single item lists with "None" extras
     if grep -q "[yY1]" <<< "$1" && [[ "$2" == "None" ]]; then
         Pkgs+=("${install[@]}")
-        # Package specific stuff
+
+        # FIXME: Move this code to separate functions for each category
         if grep -q "obmenu" <<< "${install[@]}" && ! grep -q "switchmenu" $MENU; then
             echo -e "\nFixing Menu:\t$3" >>"$LOG" 2>&1
             sed -i '/manjaro-kb-pipemenu/ a\
@@ -153,13 +146,16 @@ package_Operation() {
             echo -en "\nFixing Menu:\t$3" >>"$LOG" 2>&1
             sed -i 's/mpv --player-operation-mode=pseudo-gui/vlc/g' "$MENU"
         fi
-    # Check number of each for multiple choice
+
+    # Check if number of each choice from 1-n choices was entered
     elif grep -q "[1-${#install[@]}]" <<< "$1" && [[ ${#install[@]} -gt 1 ]]; then
         for ((n=1; n<=${#install[@]}; n++)); do
-            y=$((n - 1))  # fix counting from 1 but indexing at 0
+            y=$((n - 1))  # looping from 1 but indexing at 0
+
             if grep -q "$n" <<< "$1"; then
                 Pkgs+=("${install[$y]}")
-                # Package specific stuff
+
+                # FIXME: switch to some form of loop or function call
                 if grep -q "s-tui" <<< "${install[$y]}"; then
                     Pkgs+=("python2-psutil")
                 elif grep -q "kdenlive" <<< "${install[$y]}"; then
@@ -185,10 +181,11 @@ package_Operation() {
                 elif grep -q "bspwm" <<< "${install[$y]}"; then
                     Pkgs+=("sxhkd")
                 fi
-                # removing something and changing menu, autostart, mimeapps etc.
+
+                # FIXME: Move this code to separate functions for each category
                 if grep -q '[yY1]' <<< "$2"; then
                     if grep -q "pcmanfm" <<< "${install[@]}"; then
-                        echo -en "\nFixing Menu:\t$3" >>"$LOG" 2>&1
+                        echo -e "Fixing Menu:\t$3" >>"$LOG" 2>&1
                         rm -rf "$CONF_PATH/Thunar"
                         sed -i '/thunar/d' "$AUTOSTART"
                         sed -i "s/${3}/${install[$y]}/g" "$MENU" "$RC_PATH"
@@ -206,7 +203,7 @@ package_Operation() {
                         fi
                     fi
                     if grep -q "atom" <<< "${install[@]}"; then
-                        echo -en "\nFixing Menu & Mimetypes: $3" >>"$LOG" 2>&1
+                        echo -e "Fixing Menu & Mimetypes: $3" >>"$LOG" 2>&1
                         rm -rf $CONF_PATH/geany
                         sed -i "s/${3}/${install[$y]}/g" "$MENU" "$RC_PATH"
                         if grep -q '2' <<< "$1"; then
@@ -218,23 +215,24 @@ package_Operation() {
                         fi
                     fi
                     if grep -q "chromium" <<< "${install[@]}"; then
-                        echo -en "\nFixing Exo-Open:\t$3" >>$LOG 2>&1
+                        echo -e "Fixing Exo-Open:\t$3" >>$LOG 2>&1
                         rm -rf "$HOME/.mozilla"
                         sed -i 's/${3}/${install[$y]}/g' "$HELPERS" "$CONF_PATH/xfce4/manjaro-xfce-configs/helpers.rc"
                     fi
                     if grep -q "clementine" <<< "${install[@]}" && [[ $n -ge 3 ]]; then
-                        echo -en "\nFixing Menu:\t$3" >>"$LOG" 2>&1
+                        echo -e "Fixing Menu:\t$3" >>"$LOG" 2>&1
                         sed -i "s/${3}/${install[$y]}/g" "$MENU" "$RC_PATH"
                     fi
                 else
                     if grep -q "thunderbird" <<< "${install[@]}" && ! grep -q "MailReader" "$HELPERS"; then
-                        echo -en "\nFixing Exo-Open:\t$3" >>"$LOG" 2>&1
+                        echo -e "Fixing Exo-Open:\t$3" >>"$LOG" 2>&1
                         echo -e "MailReader=${install[$y]}" >> "$HELPERS"
                     fi
                 fi
             fi
         done
     fi
+
     # If answer to remove was yes or if $2 is 'None'.. add $3 & $4 to removal list
     if grep -q '[yY1]' <<< "$1" || grep -q '[yY1]' <<< "$2"; then
         if ! grep -q "$3" <<< "${rPkgs[@]}" && [[ "$3" ]]; then
@@ -249,14 +247,10 @@ package_Operation() {
     install=()
 }
 
-# Called exclusively with the intent of creating a swapfile
-# Will only do something if swap does not already exist
-# loops itself when wrong size or formatting entered
-# by design no more than 99999M or 99G is allowed
 setup_swapfile() {
     if awk '/^Swap:/ {exit !$2}' <<< "$(free)"; then
-        clear; echo -e "\n\n\n\t${g}Swap space found on disk...\n\n\tSkipping Swapfile Setup...${reg}"
-        draw_box $R $C 8 $W $col; echo -e "\n\n"; sleep 2
+        clear; echo -e "\n\n\n\t${GREEN}Swap already exists...\n\n\tskipping swap setup...${NORM}"
+        draw_box 8 ; echo -e "\n\n"; sleep 2
     else
         create_Dialog swp "Would you like to setup a swapfile"
         if grep -q '[yY1]' <<< "$swp"; then
@@ -264,7 +258,7 @@ setup_swapfile() {
             if grep -q '[yY1]' <<< "$cswp"; then
                 echo -e "\n\n\n\tEnter the size of swap wanted 8192M or 8G for 8gb system
                 \n\n\tM = Mebibytes, G = Gibibytes"
-                draw_box $R $C 8 $W $col; printf "\n\n: "; read -r size
+                draw_box 8 ; printf "\n\n: "; read -r size
             fi
         fi
     fi
@@ -275,32 +269,32 @@ setup_swapfile() {
                 echo "checking size wasnt too big"
                 if grep '^[1-9][0-9][0-9].*G$' <<< "$size" || grep '^[1-9][0-9][0-9][0-9][0-9][0-9].*M$' <<< "$size"; then
                     clear; echo -e "\n\n\n\tSize Too Big...\n\n\tAs a failsafe, no more than 999999M or 99G is allowed"
-                    draw_box $R $C 8 $W $col; sleep 1
+                    draw_box 8 ; sleep 1
                     read -n1 -rsp $'\n\n\tPress Any Key to continue...\n\n'
                     setup_swapfile
                 else
                     sudo fallocate -l "$size" /swapfile && sudo chmod 600 /swapfile
                     sudo mkswap /swapfile && sudo swapon /swapfile
-                    clear; echo -e "\n\n\n\tAppending to /ect/fstab\n"
+                    clear; echo -e "\n\n\tAppending to /ect/fstab\n"
                     echo "/swapfile                                 none           swap    defaults 0 0" | sudo tee -a /etc/fstab
                     echo -e "Set up Swapfile:\t$size" >>"$LOG" 2>&1
                 fi
             else
                 clear; echo -e "\n\n\n\tWrong Formatting...\n\n\tPlease make sure to end an upper case 'M' or 'G'"
-                draw_box $R $C 8 $W $col; sleep 1
+                draw_box 8 ; sleep 1
                 read -n1 -rsp $'\n\n\tPress Any Key to continue...\n\n'
                 setup_swapfile
             fi
         else
-            clear; echo -e "\n\n\n\tNo size entered"; sleep 2
-            draw_box $R $C 8 $W $col; sleep 1
+            clear; echo -e "\n\n\tNo size entered"; sleep 2
+            draw_box 8 ; sleep 1
             setup_swapfile
         fi
     elif grep -q '[yY1]' <<< "$swp"; then
         totalM="$(($(free --mega | awk '/^Mem:/{print $2}') + 50))M"
         sudo fallocate -l "$totalM" /swapfile && sudo chmod 600 /swapfile
         sudo mkswap /swapfile && sudo swapon /swapfile
-        clear; echo -e "\n\n\n\tAppending to /ect/fstab\n"
+        clear; echo -e "\n\n\tAppending to /ect/fstab\n"
         echo "/swapfile                                 none           swap    defaults 0 0" | sudo tee -a /etc/fstab
         echo -e "Set up Swapfile:\t$totalM" >>"$LOG" 2>&1
     else
@@ -321,7 +315,7 @@ setup_LTS_Kernel() {
     sudo pacman -R linux --noconfirm
     sudo grub-mkconfig -o /boot/grub/grub.cfg
     clear; echo -e "\n\n\n\tLinux LTS Setup Complete\n\n\n\tPlease See: https://wiki.archlinux.org/index.php/Kernels"
-    draw_box $R $C 8 $W $col; sleep 1
+    draw_box 8 ; sleep 1
     read -n1 -rsp $'\n\n\tPress Any Key to continue...\n\n'
     echo -e "\nLinux LTS Setup: $lts_kernel" >>"$LOG" 2>&1
 }
@@ -332,7 +326,7 @@ setup_Bluetooth() {
     sudo modprobe btusb
     sudo systemctl enable bluetooth.service
     clear; echo -e "\n\n\n\tBluetooth Setup Complete\n\n\n\tPlease See: https://wiki.archlinux.org/index.php/bluetooth"
-    draw_box $R $C 8 $W $col; sleep 1
+    draw_box 8 ; sleep 1
     read -n1 -rsp $'\n\n\tPress Any Key to continue...\n\n'
     echo -e "\nBluetooth Set Up: $btooth" >>"$LOG" 2>&1
 }
@@ -348,7 +342,7 @@ setup_Printer() {
     sudo cups-genppdupdate
     sudo systemctl enable org.cups.cupsd.service
     clear; echo -e "\n\n\n\tPrinter Setup Complete\n\n\n\tPlease See: https://wiki.archlinux.org/index.php/CUPS"
-    draw_box $R $C 8 $W $col; sleep 1
+    draw_box 8 ; sleep 1
     read -n1 -rsp $'\n\n\tPress Any Key to continue...\n\n'
     echo -e "\nPrinter Set Up: $printer" >>"$LOG" 2>&1
 }
