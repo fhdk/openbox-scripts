@@ -1,27 +1,23 @@
 #!/usr/bin/env bash
 
-# manjaro-polybar-edit: An Manjaro polybar config file editor
+# al-polybar-edit: An Manjaro polybar config file editor
 # Copyright (C) 2017 Nathaniel <natemaia10@gmail.com>
 
-
-TITLE="Manjaro Polybar Edit"
-ICON="--window-icon=/usr/share/icons/hicolor/scalable/apps/manjaro.svg"
-PPATH="$HOME/.config/polybar"
-HELP="manjaro-polybar-edit:
+readonly PPATH="$HOME/.config/polybar"
+readonly TITLE="Manjaro Polybar Edit"
+readonly ICON="--window-icon=/usr/share/icons/Manjaro-Light/64x64/places/distributor-logo-archlabs.png"
+readonly CHECKLIST="zenity $ICON --width=450 --height=500 --list --checklist --multiple"
+readonly HELP="al-polybar-edit:
 \tA script to edit selected polybar configs
-\nOptions:
-\t-h --help   show this message
-\tNo other options are supported.
-\nPolybar files must be in $PPATH
+\nOptions:\n\t-h --help   show this message
+\tNo other options are supported.\n\nPolybar files must be in $PPATH
 Checkmarked configs will be opened in a text editor"
-FILES=($(find -L "$PPATH" -maxdepth 4 -type f))
 
 case "$@" in
-    -h|--help)
-        echo -e "$HELP"
-        exit 0
+    -h|--help) echo -e "$HELP" ; exit 0
 esac
 
+readonly FILES=($(find -L "$PPATH" -maxdepth 4 -type f))
 edit_Configs() {
     for f in "${FILES[@]}"; do
         if [[ $f = *config ]] || [[ $f = *conf ]] || [[ $f = *.sh ]] || [[ -x $f ]]; then
@@ -29,19 +25,21 @@ edit_Configs() {
             LIST="$LIST FALSE $NAME"
         fi
     done
-    ANSWER=$(zenity $WINICON --list --title="$TITLE" \
-        --text="<big>Select Polybar Configs or Scripts to edit</big>\n\n" \
-        --checklist --width=450 --height=500 --multiple \
-        --column="Select" --column="File Name" $LIST --separator=" ")
+    MSG="<big>Select Polybar Configs to edit</big>\n"
+    ANSWER=$($CHECKLIST --title="$TITLE" --text="$MSG" --column="Select" --column="File" $LIST --separator=" ")
     if [[ $? == 1 ]]; then
         exit 0
     else
-        for n in $ANSWER; do
-            FULL="$HOME/.config/$n"
+        for name in $ANSWER; do
+            FULL="$HOME/.config/$name"
             if hash exo-open &>/dev/null; then
-                exo-open "$FULL"
-            else
-                termite -e "$EDITOR $FULL" &>/dev/null &
+                (exo-open "$FULL" &) ; break
+            elif hash termite &>/dev/null; then
+                (termite -e "$EDITOR $FULL" &>/dev/null) ; break
+            elif hash st &>/dev/null; then
+                (st -e $EDITOR $FULL &) ; break
+            elif hash urxvt &>/dev/null; then
+                (urxvt -e "$EDITOR $FULL" &) ; break
             fi
         done
     fi

@@ -12,7 +12,7 @@ Menu -> Settings -> Openbox -> GUI Menu Editor
 (Links to more detailed info can be found in the Online Help for Openbox in the Help menu)
 
 
-How To edit ArchLabs pipemenu
+How To edit Manjaro pipemenu
 ================================
 
 1)  For the Graphics, Multimedia and Browsers pipemenus:
@@ -28,7 +28,7 @@ GRAPHICS_APPS=('mirage' 'gimp' 'blender' 'inkscape' 'mandelbulber' 'viewnior')
 
 OR
 
-2)  Other menus, eg manjaro-help-pipemenu, are in "/usr/bin/"
+2)  Other menus, eg al-help-pipemenu, are in "/usr/bin/"
 
 *** Remember that they could be over-written by a BL package upgrade,
     so use the following method instead of editing the file as root ***
@@ -46,7 +46,7 @@ The first element is the label, the second is the command to be run
 Recent Files Pipemenu
 =====================
 
-Run "manjaro-recent-files-pipemenu -h" to show the usage of the command.
+Run "al-recent-files-pipemenu -h" to show the usage of the command.
 
 To change how the menu displays recent files, you can add the following switches
 to the menu.xml pipemenu entry:
@@ -56,4 +56,4 @@ to the menu.xml pipemenu entry:
 
 So to have the most recent 20 items displayed, with the newest first, use:
 
-<menu execute="manjaro-recent-files-pipemenu -r -l 20" id="pipe-recentfilesmenu" label="Recent Files"/>
+<menu execute="al-recent-files-pipemenu -r -l 20" id="pipe-recentfilesmenu" label="Recent Files"/>

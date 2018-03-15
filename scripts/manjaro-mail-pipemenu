@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 # A pipemenu base script/template for creating category based pipemenus
 # written by Nathaniel Maia, December 2017 for Manjaro
 
@@ -11,14 +10,11 @@ NAME="mail"
 PNAME="Mail"
 FAIL_MSG="No Apps Installed"
 
-# make sure these two arrays are the same amount of items
-# if not things will go wrong and you will have blank space
 CMD=(evolution geary thunderbird mailspring)
 DESC=(Evolution Geary Thunderbird Mailspring)
 
-# source lib file
-if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2> /dev/null; then
-    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg"
+if ! . "/usr/lib/manjaro/common/al-include.cfg" 2> /dev/null; then
+    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/al-include.cfg"
     exit 1
 fi
 
@@ -31,14 +27,20 @@ menu_Body() {
 }
 
 menuStart "$NAME" "$PNAME"
-num=0
 for x in "${CMD[@]}"; do
-    if hash "$x" &>/dev/null; then num=$((num + 1)); fi
+    if hash "$x" &>/dev/null; then
+        num=1 ; break
+    fi
 done
 if [[ $num -gt 0 ]]; then
     menu_Body
 else
     menuSeparator "$FAIL_MSG"
+    if hash pamac-manager &>/dev/null; then
+        menuItem "Install with Package Manager" "pamac-manager"
+    elif hash termite pacli &>/dev/null; then
+        menuItem "Install with Package Manager" "termite -e pacli"
+    fi
 fi
 menuEnd
 

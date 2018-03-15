@@ -17,8 +17,8 @@ CMD=()
 DESC=()
 
 # source lib file
-if ! . "/usr/lib/manjaro-openbox/common/manjaro-include.cfg" 2> /dev/null; then
-    echo -e "[ERROR]: Failed to source /usr/lib/manjaro-openbox/common/manjaro-include.cfg"
+if ! . "/usr/lib/manjaro/common/al-include.cfg" 2> /dev/null; then
+    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/al-include.cfg"
     exit 1
 fi
 

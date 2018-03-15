@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 # A pipemenu base script/template for creating category based pipemenus
 # written by Nathaniel Maia, December 2017 for Manjaro
 
@@ -11,17 +10,12 @@ NAME="terminals"
 PNAME="Terminals"
 FAIL_MSG="No Apps Installed"
 
-# make sure these two arrays are the same amount of items
-# if not things will go wrong and you will have blank space
 CMD=(terminator tilda tilix urxvt st termite xfce4-terminal xterm)
 DESC=(Terminator Tilda Tilix Rxvt-Unicode "Suckless Terminal" Termite
-      Xfce4-terminal Xterm
-      )
+      Xfce4-terminal Xterm)
 
-# source lib file
-if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2> /dev/null; then
-    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg"
-    exit 1
+if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
+    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/al-include.cfg" ; exit 1
 fi
 
 menu_Body() {
@@ -33,14 +27,20 @@ menu_Body() {
 }
 
 menuStart "$NAME" "$PNAME"
-num=0
 for x in "${CMD[@]}"; do
-    if hash "$x" &>/dev/null; then num=$((num + 1)); fi
+    if hash "$x" &>/dev/null; then
+        num=1 ; break
+    fi
 done
 if [[ $num -gt 0 ]]; then
     menu_Body
 else
     menuSeparator "$FAIL_MSG"
+    if hash pamac-manager &>/dev/null; then
+        menuItem "Install with Package Manager" "pamac-manager"
+    elif hash termite pacli &>/dev/null; then
+        menuItem "Install with Package Manager" "termite -e pacli"
+    fi
 fi
 menuEnd
 

@@ -2,9 +2,6 @@
 
 """ Prints dimensions of the active monitor """
 
-#    manjaro-xinerama-prop: script to get xinerama properties in a shell script
-#    Copyright (C) 2017 Nathaniel Maia <natemaia10@gmail.com>
-
 def main():
     """ Using the active window print the dimensions of the monitor it is on """
     import gi
@@ -21,6 +18,7 @@ def main():
     except:
         print("Not running under X")
         return 1
+
 
 if __name__ == "__main__":
     main()

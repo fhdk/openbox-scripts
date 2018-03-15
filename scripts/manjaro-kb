@@ -1,49 +1,9 @@
 #!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-#
-#    manjaro-kb: a script to read openbox's rc.xml and write out the keybinds
-#    Copyright (C) 2010 wlourf
-#    Copyright (C) 2015 damo    <damo@bunsenlabs.org>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-########################################################################
-#
-# This script reads the keybinds configuration file ("$HOME/.config/openbox/rc.xml")
-# and writes them to a text file ("$HOME/.config/openbox/kbinds.txt").
-# The script is used by manjaro-kb-pipemenu to pipe the output to the Openbox menu, or to display keybinds in a separate window
-#
-# Based on a script by wlourf 07/03/2010
-# <http://u-scripts.blogspot.com/2010/03/how-to-display-openboxs-shortcuts.html>
-#
-# The original script parsed the keyboard and mouse commands from
-# rc.xml, and passed them to Conkys to display on screen
-#
-# April 2015
-#   : This script outputs the keyboard keybinds to terminal or, with
-#     a "--gui" argument will display the output in a text window as well
-#
-#   Written by damo <damo@bunsenlabs.org> for BunsenLabs Linux, April 2015
-#
-#	Renamed for Manjaro
-#
-########################################################################
-#
-#   ****If Openbox xml version changes then the xml root will need
-#        changing as well (line 56)********
-#
-########################################################################
+
+# al-kb: a script to read openbox's rc.xml and write out the keybinds
+# Copyright (C) 2010 wlourf
+# Copyright (C) 2015 damo <damo@bunsenlabs.org>
+
 import sys
 import os
 import datetime
@@ -67,7 +27,7 @@ def cmdargs():
             gui = True
             return gui
         else:
-            msg = "\n\n\tUSAGE: to display keybinds in a text window use 'manjaro-kb --gui'\n\n"
+            msg = "\n\n\tUSAGE: to display keybinds in a text window use 'al-kb --gui'\n\n"
             msg += "\tRunning the script without args will send output to the terminal\n\n"
             print(msg)
             sys.exit()
@@ -174,7 +134,7 @@ if __name__ == "__main__":
 
     if gui:     # output formatted keybinds text in text window
         DLG = "zenity --text-info --title='Openbox Keybinds' "
-        DLG += "--window-icon=/usr/share/icons/hicolor/scalable/apps/manjaro.svg "
+        DLG += "--window-icon=/usr/share/icons/hicolor/256x256/apps/al-hello-logo.png "
         DLG += "--filename=$HOME/.config/openbox/kbinds.txt "
         DLG += "--width=800 --height=700 "
         os.system(DLG)

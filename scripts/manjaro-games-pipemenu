@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
 
-# An office pipemenu
-# written by Nathaniel Maia, December 2017 for Manjaro
+# A pipemenu base script/template for creating category based pipemenus
+# written by Matthew Dobson, February 2018 for Manjaro
 
 # Add something like this to your menu.xml
-# <menu execute="al-office-pipemenu" id="office" label="Office"/>
+# <menu execute="SCRIPTNAME" id="NAME" label="PNAME"/>
 
-NAME="office"
-PNAME="Office"
+NAME="games"
+PNAME="Games"
 FAIL_MSG="No Apps Installed"
 
-CMD=(abiword calligra epdfview galculator libreoffice mupdf qpdfview zathura)
-DESC=(Abiword "Calligra Suite" ePDFview Calculator "Libre Office" muPDF qpdfview Zathura)
+CMD=(minecraft minetest lsi-steam steam-runtime 0ad gnome-games
+     aisleriot hitori chromium-bsu gnuchess gnome-chess)
+DESC=(Minecraft Minetest Steam "Steam Runtime" 0AD "Gnome Games"
+      Aisleriot Hitori Chromium  "Gnu Chess" "Gnome Chess")
 
 if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
     echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/al-include.cfg"

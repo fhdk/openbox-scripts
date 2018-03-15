@@ -1,30 +1,14 @@
-#!/bin/sh
-#    manjaro-recent-files-pipemenu - a script to parse .recently-used.xbel
-#    and generate openbox pipe menu
-#    Copyright (C) 2010  John Crawley
-#    Borrowed with love by the Manjaro boys.
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#    version 2012/07/01-cb
+#!/usr/bin/env bash
 
-# Ported to #!++ <https://crunchbangplusplus.org>
-# by Ben Young <computermouth@crunchbangplusplus.org>
-# Ported to Manjaro Linux <https://manjaroblog.wordpress.com/> February 2017
-# Matthew Dobson <mattdobson2001@gmail.com>
+# al-recent-files-pipemenu - parse .recently-used.xbel and generate openbox pipe menu
+# Copyright (C) 2010  John Crawley
+# Borrowed with love by the Manjaro boys.
 
 # Usage: add
-# <menu id="recent" label="Recent Files" execute="/path/to/cbpp-recent-files-pipemenu" />
-# to your .config/openbox/menu.xml, or use with cbpp-places-pipemenu (see comments there)
+# <menu id="recent" label="Recent Files" execute="/path/to/al-recent-files-pipemenu" />
+# to your .config/openbox/menu.xml, or use with al-places-pipemenu (see comments there)
 
-maximum_entries=15 # max. number of entries in menu
+maximum_entries=15
 
 #######################################################################
 
@@ -44,7 +28,7 @@ else
 fi
 
 # if argument is --clear, empty .recently-used.xbel
-[ "$1" = '--clear' ] && {
+[[ "$1" == '--clear' ]] && {
     cat <<':EOF' > "${file_path}"
 <?xml version="1.0" encoding="UTF-8"?>
 <xbel version="1.0"
@@ -93,14 +77,12 @@ files=$(perl -MURI::Escape -e 'print uri_unescape($ARGV[0]);' "$files")
 
 output='<openbox_pipe_menu>
 '"$files"'
-<separator />
-    <item label="Clear Recent Files">
-        <action name="Execute">
-            <command>
-            &apos;'"$0"'&apos; --clear
-            </command>
-        </action>
-    </item>
+<separator/>
+  <item label="Clear Recent Files">
+    <action name="Execute">
+      <command>&apos;'"$0"'&apos; --clear</command>
+    </action>
+  </item>
 </openbox_pipe_menu>
 '
 printf '%s' "$output"  # printf because echo sometimes eats backslashes

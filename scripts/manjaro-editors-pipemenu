@@ -1,24 +1,21 @@
 #!/usr/bin/env bash
 
-
 # Manjaro Code Pipemenu
 # written by Nathaniel Maia, December 2017
 
 # Add something like this to your menu.xml
-# <menu execute="manjaro-code-pipemenu" id="code" label="Code"/>
+# <menu execute="al-code-pipemenu" id="code" label="Code"/>
 
 NAME="code"
 PNAME="Code"
 FAIL_MSG="No Apps Installed"
 
-# make sure these two arrays are the same amount of items
-# if not things will go wrong and you will have blank space
 CMD=(atom brackets emacs geany gedit gvim leafpad mousepad vscode subl3)
 DESC=(Atom Brackets Emacs Geany Gedit Gvim Leafpad Mousepad "Visual Studio" Sublime)
 
 # source lib file
-if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2> /dev/null; then
-    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg"
+if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
+    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/al-include.cfg"
     exit 1
 fi
 
@@ -31,14 +28,20 @@ menu_Body() {
 }
 
 menuStart "$NAME" "$PNAME"
-num=0
 for x in "${CMD[@]}"; do
-    if hash "$x" &>/dev/null; then num=$((num + 1)); fi
+    if hash "$x" &>/dev/null; then
+        num=1 ; break
+    fi
 done
 if [[ $num -gt 0 ]]; then
     menu_Body
 else
     menuSeparator "$FAIL_MSG"
+    if hash pamac-manager &>/dev/null; then
+        menuItem "Install with Package Manager" "pamac-manager"
+    elif hash termite pacli &>/dev/null; then
+        menuItem "Install with Package Manager" "termite -e pacli"
+    fi
 fi
 menuEnd
 

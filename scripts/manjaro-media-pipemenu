@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 # A pipemenu base script/template for creating category based pipemenus
 # written by Nathaniel Maia, December 2017 for Manjaro
 
@@ -11,34 +10,45 @@ NAME="media"
 PNAME="Media"
 FAIL_MSG="No Apps Installed"
 
-# make sure these two arrays are the same amount of items
-# if not things will go wrong and you will have blank space
-CMD=(audacious clementine guvcview lollypop rhythmbox spotify vlc mpv gnome-mpv sonata cantata)
-DESC=(Audacious "Clementine Music Player" guvcview Lollypop Rhythmbox Spotify VLC MPV Gnome-MPV Sonata Cantata)
+CMD=(audacity audacious deadbeef clementine guvcview lollypop
+     gnome-music rhythmbox spotify vlc mpv gnome-mpv sonata cantata
+     kodi)
+DESC=(Audacity Audacious DeaDBeeF Clementine guvcview Lollypop
+      "Gnome Music" Rhythmbox Spotify VLC MPV Gnome-MPV Sonata Cantata
+      Kodi)
 
-# source lib file
-if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2> /dev/null; then
-    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg"
+if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
+    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/al-include.cfg"
     exit 1
 fi
 
 menu_Body() {
     for ((i=0; i<${#CMD[@]}; i++)); do
         if hash "${CMD[$i]}" &>/dev/null; then
-            menuItem "${DESC[$i]}" "${CMD[$i]}"
+            if [[ "${CMD[$i]}" == 'mpv' ]]; then
+                menuItem "${DESC[$i]}" "${CMD[$i]} --player-operation-mode=pseudo-gui"
+            else
+                menuItem "${DESC[$i]}" "${CMD[$i]}"
+            fi
         fi
     done
 }
 
 menuStart "$NAME" "$PNAME"
-num=0
 for x in "${CMD[@]}"; do
-    if hash "$x" &>/dev/null; then num=$((num + 1)); fi
+    if hash "$x" &>/dev/null; then
+        num=1 ; break
+    fi
 done
 if [[ $num -gt 0 ]]; then
     menu_Body
 else
     menuSeparator "$FAIL_MSG"
+    if hash pamac-manager &>/dev/null; then
+        menuItem "Install with Package Manager" "pamac-manager"
+    elif hash termite pacli &>/dev/null; then
+        menuItem "Install with Package Manager" "termite -e pacli"
+    fi
 fi
 menuEnd
 

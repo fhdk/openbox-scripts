@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 
-
 # Manjaro Graphics Pipemenu
 # written by Nathaniel Maia, December 2017
 
 # Add something like this to your menu.xml
-# <menu execute="manjaro-graphics-pipemenu" id="graphics" label="Graphics"/>
+# <menu execute="al-graphics-pipemenu" id="graphics" label="Graphics"/>
 
 NAME="graphics"
 PNAME="Graphics"
 FAIL_MSG="No Apps Installed"
 
-# make sure these two arrays are the same amount of items
-# if not things will go wrong and you will have blank space
-CMD=(gimp inkscape kdenlive krita openshot pinta gpicview gpick)
-DESC=(Gimp Inkscape Kdenlive Krita Openshot Pinta "Picture Viewer" Gpick)
+CMD=(gimp inkscape obs-studio simplescreenrecorder kdenlive krita openshot pinta
+     viewnior gpicview gpick gcolor2 xfce4-screenshooter
+     )
+DESC=(Gimp Inkscape "OBS Studio" SimpleScreenRecorder Kdenlive Krita Openshot Pinta
+      Viewnior "Picture Viewer" Gpick Gcolor2 "Xfce Screenshooter"
+      )
 
-# source lib file
-if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2> /dev/null; then
-    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg"
+if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
+    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/al-include.cfg"
     exit 1
 fi
 
@@ -31,14 +31,20 @@ menu_Body() {
 }
 
 menuStart "$NAME" "$PNAME"
-num=0
 for x in "${CMD[@]}"; do
-    if hash "$x" &>/dev/null; then num=$((num + 1)); fi
+    if hash "$x" &>/dev/null; then
+        num=1 ; break
+    fi
 done
 if [[ $num -gt 0 ]]; then
     menu_Body
 else
     menuSeparator "$FAIL_MSG"
+    if hash pamac-manager &>/dev/null; then
+        menuItem "Install with Package Manager" "pamac-manager"
+    elif hash termite pacli &>/dev/null; then
+        menuItem "Install with Package Manager" "termite -e pacli"
+    fi
 fi
 menuEnd
 

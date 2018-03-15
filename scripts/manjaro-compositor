@@ -1,70 +1,46 @@
 #!/usr/bin/env bash
 
-#    manjaro-compositor: an Openbox Pipe Menu for use with compton compositor
-#    Copyright (C) 2012 Philip Newborough   <corenominal@corenominal.org>
-#    Copyright (C) 2013 Aleks-Daniel Jakimenko
-#    Copyright (C) 2015 John Crawley    <john@bunsenlabs.org>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# al-compositor: an Openbox Pipe Menu for use with compton compositor
+# Copyright (C) 2012 Philip Newborough <corenominal@corenominal.org>
+# Copyright (C) 2013 Aleks-Daniel Jakimenko
+# Copyright (C) 2015 John Crawley <john@bunsenlabs.org>
 
+readonly EXECXCOMP='compton -b'
+readonly RESTART_ATTEMPTS=20
+readonly HELP='
+al-compositor an openbox pipe menu for use with compton
+It should normally be called from an openbox menu.
 
-EXECXCOMP='compton -b'
-RESTART_ATTEMPTS=20
-MANJARO_COMMON_LIBDIR='/usr/lib/manjaro/common'
-HELP='    manjaro-compositor an Openbox Pipe Menu for use with compton compositor
-    It should normally be called from an openbox menu.
-
-Options (usually passed from the menu):
+Options (passed from the menu):
     -h --help   show this message
     --start     start the compositor and restart tint2, if running
     --restart   restart the compositor, if running
     --stop      stop the compositor
     --edit      open the compton config file in a text editor
-    --watch     restart the compositor whenever the config file is modified
-    (--watch is useful for debugging)
+    --watch     restart compton when the config is modified (useful for debugging)
 
-    If manjaro-compositor is called with no options (the usual method),
-    it will output an xml openbox pipemenu for handling compositing.
+If al-compositor is called with no options (the usual method),
+it will output an xml openbox pipemenu for handling compositing.
 
-See ~/.config/compton.conf and "man compton" for configuration options.
-'
-# look for a help option somewhere
+See ~/.config/compton.conf and "man compton" for configuration options.'
+
 for i in "$@"; do
     case "$i" in
-        -h|--help)
-            echo "$HELP"
-            exit 0
-            ;;
+        -h|--help) echo "$HELP" ; exit 0
     esac
 done
 
-if ! . "$MANJARO_COMMON_LIBDIR/manjaro-include.cfg" 2> /dev/null; then
-    echo $"Error: Failed to source manjaro-include.cfg in $MANJARO_COMMON_LIBDIR" >&2
-    exit 1
+if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
+    echo $"Error: Failed to source /usr/lib/manjaro/common/al-include.cfg" >&2 ; exit 1
 fi
 
 declareDependencies compton
 
 forcekill_compton() {
     killall -q compton
-    for (( i=0; i < RESTART_ATTEMPTS; i++ )); do
-        pidof compton > /dev/null ||
-            break
-
-        (( i == RESTART_ATTEMPTS - 1 )) &&
-            killall -q -S KILL compton
-
+    for ((i=0; i<RESTART_ATTEMPTS; i++)); do
+        [[ $(pidof compton) ]] || break
+        killall -q -S KILL compton
         sleep 0.25
     done
 }
@@ -90,7 +66,7 @@ elif [[ $1 = '--stop' ]]; then
     forcekill_compton
 
 elif [[ $1 = '--restart' ]]; then
-    if pidof compton > /dev/null; then
+    if [[ $(pidof compton) ]]; then
         forcekill_compton
         "$0" --start
     else # nothing to restart
