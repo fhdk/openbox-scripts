@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
-# al-tintedit: a Manjaro tint2 config file editor
+# manjaro-tintedit: a Manjaro tint2 config file editor
 # Copyright (C) 2015 damo <damo@bunsenlabs.org>
 # Borrowed with love by the Manjaro boys.
 
 readonly TITLE="Manjaro Tint2 Edit"
-readonly ICON="--window-icon=/usr/share/icons/Manjaro-Light/64x64/places/distributor-logo-archlabs.png"
+readonly ICON="--window-icon=/usr/share/icons/manjaro/maia/48x48.png"
 readonly CHECKLIST="zenity --width=400 --height=500 $ICON --list --checklist --multiple"
 readonly TPATH="$HOME/.config/tint2"
 readonly FILES=($(find "$TPATH" -maxdepth 4 -type f))
 readonly HELP='
-\tal-tint2edit a script to edit selected tint2 config files
+\tmanjaro-tint2edit a script to edit selected tint2 config files
 \nOptions:
 \t-h --help   show this message
 \nNo other options are supported.

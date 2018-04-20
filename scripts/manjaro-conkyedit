@@ -5,7 +5,7 @@
 # Re Written by Nathaniel Maia For Manjaro, December 2017
 
 readonly TITLE="Manjaro Conky Edit"
-readonly ICON="--window-icon=/usr/share/icons/Manjaro-Light/64x64/places/distributor-logo-archlabs.png"
+readonly ICON="--window-icon=/usr/share/icons/manjaro/maia/48x48.png"
 readonly TEXT="<big>Select Conkys to edit from the list</big>"
 readonly CHECKLIST="zenity --width=400 --height=500 $ICON --list --checklist --multiple"
 

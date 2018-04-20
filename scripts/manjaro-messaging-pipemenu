@@ -13,8 +13,8 @@ FAIL_MSG="No Apps Installed"
 CMD=(hexchat pidgini skypeforlinux telegram-desktop wire-desktop yakyak rambox)
 DESC=(Hexchat Pidgin "Skype for Linux" Telegram Wire YakYak Rambox)
 
-if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
-    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/al-include.cfg"
+if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2>/dev/null; then
+    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg"
     exit 1
 fi
 
@@ -38,8 +38,8 @@ else
     menuSeparator "$FAIL_MSG"
     if hash pamac-manager &>/dev/null; then
         menuItem "Install with Package Manager" "pamac-manager"
-    elif hash termite pacli &>/dev/null; then
-        menuItem "Install with Package Manager" "termite -e pacli"
+    elif hash termite pacui &>/dev/null; then
+        menuItem "Install with Package Manager" "termite -e pacui"
     fi
 fi
 menuEnd

@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-# al-polybar-pipemenu - an Openbox pipemenu for polybar manipulation
+# manjaro-polybar-pipemenu - an Openbox pipemenu for polybar manipulation
 # Written for Manjaro by Nathaniel Maia <natemaaia10@gmail.com> 2017
 
 readonly CPATH="$HOME/.config/polybar"
 readonly HELP='
-\tal-polybar-pipemenu an Openbox Pipe Menu for Polybar
+\tmanjaro-polybar-pipemenu an Openbox Pipe Menu for Polybar
 \tIt should normally be called from an openbox menu.
 \nOptions:
 \t-h --help   show this message
-\n\tIf al-polybar-pipemenu is called with no options (the usual method),
+\n\tIf manjaro-polybar-pipemenu is called with no options (the usual method),
 \tit will output an xml openbox pipemenu for handling polybar sessions,
 \tand editing configuration files.
 \nFor more information, see "man polybar"
@@ -20,8 +20,8 @@ case "$@" in
 esac
 
 CONFIG="$CPATH/config"
-if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
-    echo $"Error: Failed to source /usr/lib/manjaro/common/al-include.cfg" ; exit 1
+if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2>/dev/null; then
+    echo $"Error: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg" ; exit 1
 fi
 
 Editmenu() {
@@ -50,23 +50,23 @@ Editmenu() {
 
 Configs() {
     menuSubmenu "EditConfigs" "Edit Configs"
-    if hash al-polybar-edit &>/dev/null; then
-        menuItem "Edit Configs" "al-polybar-edit"
+    if hash manjaro-polybar-edit &>/dev/null; then
+        menuItem "Edit Configs" "manjaro-polybar-edit"
     fi
     Editmenu
     menuSubmenuEnd
 }
 
 Launchmenu() {
-    if hash al-polybar-session &>/dev/null && [[ -f "$CPATH/sessions/openbox-sessionfile" ]]; then
+    if hash manjaro-polybar-session &>/dev/null && [[ -f "$CPATH/sessions/openbox-sessionfile" ]]; then
         if [[ $(pidof polybar) ]]; then
-            menuItem "Restart Polybar" "al-polybar-session"
+            menuItem "Restart Polybar" "manjaro-polybar-session"
         else
-            menuItem "Start Polybar" "al-polybar-session"
+            menuItem "Start Polybar" "manjaro-polybar-session"
         fi
     fi
-    if type al-polyzen &>/dev/null; then
-        menuItem "Polybar GUI" "al-polyzen"
+    if type manjaro-polyzen &>/dev/null; then
+        menuItem "Polybar GUI" "manjaro-polyzen"
     fi
 }
 

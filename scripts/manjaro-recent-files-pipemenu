@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-# al-recent-files-pipemenu - parse .recently-used.xbel and generate openbox pipe menu
+# manjaro-recent-files-pipemenu - parse .recently-used.xbel and generate openbox pipe menu
 # Copyright (C) 2010  John Crawley
 # Borrowed with love by the Manjaro boys.
 
 # Usage: add
-# <menu id="recent" label="Recent Files" execute="/path/to/al-recent-files-pipemenu" />
-# to your .config/openbox/menu.xml, or use with al-places-pipemenu (see comments there)
+# <menu id="recent" label="Recent Files" execute="/path/to/manjaro-recent-files-pipemenu" />
+# to your .config/openbox/menu.xml, or use with manjaro-places-pipemenu (see comments there)
 
 maximum_entries=15
 

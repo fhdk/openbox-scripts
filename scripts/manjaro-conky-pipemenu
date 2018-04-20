@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
-# al-conky-pipemenu - an Openbox pipemenu for manipulating conky
+# manjaro-conky-pipemenu - an Openbox pipemenu for manipulating conky
 # Copyright (C) 2015 damo <damo@bunsenlabs.org>
 
-readonly CZEN="al-conkyzen"
-readonly CSESSION="al-conky-session"
+readonly CZEN="manjaro-conkyzen"
+readonly CSESSION="manjaro-conky-session"
 readonly CONKYDEFAULT="$HOME/.config/conky/Manjaro.conkyrc"
 readonly CONKYPATH="$HOME/.config/conky"
 readonly CSESSIONFILE="$CONKYPATH/conky-sessionfile"
 readonly SESSIONS="$CONKYPATH/saved-sessions"
 readonly HELPFILE="/usr/share/manjaro/docs/helpfile-conkyzen.txt"
-readonly HELP='\tal-conky-pipemenu an Openbox Pipe Menu for use with conky
+readonly HELP='\tmanjaro-conky-pipemenu an Openbox Pipe Menu for use with conky
 \tIt should normally be called from an openbox menu.
 \nOptions:
 \t-h --help   show this message
-\n\tIf al-conky-pipemenu is called with no options (the usual method),
+\n\tIf manjaro-conky-pipemenu is called with no options (the usual method),
 \tit will output an xml openbox pipemenu for handling conky sessions.
 \nSee /usr/share/manjaro/docs/helpfile-conkyzen.txt and "man conky" for more information'
 
@@ -24,8 +24,8 @@ for arg in "$@"; do
     esac
 done
 
-if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
-    echo "Error: Failed to source /usr/lib/manjaro/common/al-include.cfg" ; exit 1
+if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2>/dev/null; then
+    echo "Error: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg" ; exit 1
 fi
 
 if ! [[ -e $CSESSIONFILE ]]; then
@@ -76,8 +76,8 @@ loadSavedsessionSubmenu(){
 }
 
 loadPinMenu(){
-    if type al-conkypin &>/dev/null; then
-        menuItem "Pin moveable Conkys" "al-conkypin"
+    if type manjaro-conkypin &>/dev/null; then
+        menuItem "Pin moveable Conkys" "manjaro-conkypin"
         menuSeparator
     fi
 }
@@ -108,8 +108,8 @@ loadEditMenu(){
 
 getConkys(){
     menuSubmenu "EditConky" "Edit Conkys"
-    if type al-conkyedit &>/dev/null;then
-        menuItem "Conky Editor" "al-conkyedit"
+    if type manjaro-conkyedit &>/dev/null;then
+        menuItem "Conky Editor" "manjaro-conkyedit"
         loadEditMenu
     else
         loadEditMenu

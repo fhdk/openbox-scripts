@@ -4,7 +4,7 @@
 # written by Nathaniel Maia, December 2017
 
 # Add something like this to your menu.xml
-# <menu execute="al-code-pipemenu" id="code" label="Code"/>
+# <menu execute="manjaro-code-pipemenu" id="code" label="Code"/>
 
 NAME="code"
 PNAME="Code"
@@ -14,8 +14,8 @@ CMD=(atom brackets emacs geany gedit gvim leafpad mousepad vscode subl3)
 DESC=(Atom Brackets Emacs Geany Gedit Gvim Leafpad Mousepad "Visual Studio" Sublime)
 
 # source lib file
-if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
-    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/al-include.cfg"
+if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2>/dev/null; then
+    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg"
     exit 1
 fi
 
@@ -39,8 +39,8 @@ else
     menuSeparator "$FAIL_MSG"
     if hash pamac-manager &>/dev/null; then
         menuItem "Install with Package Manager" "pamac-manager"
-    elif hash termite pacli &>/dev/null; then
-        menuItem "Install with Package Manager" "termite -e pacli"
+    elif hash termite pacui &>/dev/null; then
+        menuItem "Install with Package Manager" "termite -e pacui"
     fi
 fi
 menuEnd

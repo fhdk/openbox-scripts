@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-# al-polybar-edit: An Manjaro polybar config file editor
+# manjaro-polybar-edit: An Manjaro polybar config file editor
 # Copyright (C) 2017 Nathaniel <natemaia10@gmail.com>
 
 readonly PPATH="$HOME/.config/polybar"
 readonly TITLE="Manjaro Polybar Edit"
-readonly ICON="--window-icon=/usr/share/icons/Manjaro-Light/64x64/places/distributor-logo-archlabs.png"
+readonly ICON="--window-icon=/usr/share/icons/manjaro/maia/48x48.png"
 readonly CHECKLIST="zenity $ICON --width=450 --height=500 --list --checklist --multiple"
-readonly HELP="al-polybar-edit:
+readonly HELP="manjaro-polybar-edit:
 \tA script to edit selected polybar configs
 \nOptions:\n\t-h --help   show this message
 \tNo other options are supported.\n\nPolybar files must be in $PPATH

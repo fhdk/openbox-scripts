@@ -2,9 +2,9 @@
 
 # Script to set the position of a moveable Conky
 # Written by @damo and @johnraff, November 2015 with major contributions by @xaos52
-# Borrowed by the Manjaro boys, rewritten in the proccess
+# Borrowed by Manjaro
 
-readonly ICON="--window-icon=/usr/share/icons/Manjaro-Light/64x64/places/distributor-logo-archlabs.png"
+readonly ICON="--window-icon=/usr/share/icons/manjaro/maia/48x48.png"
 readonly DIALOG="zenity --info $ICON"
 readonly QUESTION="zenity --question $ICON"
 # unset CONKYPATH posX_1 posY_1 posX_2 posY_2 OFFSET_X OFFSET_Y gapX gapY

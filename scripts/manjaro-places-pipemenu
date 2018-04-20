@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
-# al-places-pipemenu - an openbox places pipe menu
+# manjaro-places-pipemenu - an openbox places pipe menu
 # Copyright (C) 2010~2016  John Crawley <john@bunsenlabs.org>
 # Copyright (C) 2017~2018  Nathaniel Maia <natemaia10@gmail.com>
 
-# <menu id="places" label="Places" execute="/path/to/al-places-pipemenu ~/" />
+# <menu id="places" label="Places" execute="/path/to/manjaro-places-pipemenu ~/" />
 # or, if you want the "recent files" menu incorporated at the top, use:
-# <menu id="places" label="Places" execute="/path/to/al-places-pipemenu --recent ~/" />
-# make sure you have al-recent-files-pipemenu, and enter its path below.
+# <menu id="places" label="Places" execute="/path/to/manjaro-places-pipemenu --recent ~/" />
+# make sure you have manjaro-recent-files-pipemenu, and enter its path below.
 
 readonly terminal=termite
 readonly text_editor=geany
 readonly open_folder_cmd=thunar
 readonly default_open_cmd=exo-open
-readonly recent_script=/usr/bin/al-recent-files-pipemenu
+readonly recent_script=/usr/bin/manjaro-recent-files-pipemenu
 
 open_file() {
     if hash "$default_open_cmd" &>/dev/null; then
@@ -29,11 +29,11 @@ open_file() {
 
 readonly shown_dotfiles=".config .local .vim .vimrc .Xresources .Xmodmap .bashrc .zshrc .xinitrc .gtkrc-2.0.mine .xprofile .xsessionrc"
 readonly HELP='
-al-places-pipemenu an Openbox Pipe Menu for showing a directory tree
+manjaro-places-pipemenu an Openbox Pipe Menu for showing a directory tree
 It should normally be called from an openbox menu.
 
 Usage:
-    al-places-pipemenu [options] [directory tree root]
+    manjaro-places-pipemenu [options] [directory tree root]
 
 Options:
     -h,--help           show this message
@@ -44,7 +44,7 @@ Options:
     If a directory tree root is not specified, $HOME will be used.
 
 Configuration:
-    /usr/bin/al-places-pipemenu may be edited directly for system-wide changes,
+    /usr/bin/manjaro-places-pipemenu may be edited directly for system-wide changes,
     or copied to ~/bin and edited there for per-user changes.
 
 Editable variables and functions, at the top of the file:

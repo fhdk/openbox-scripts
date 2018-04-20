@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-# al-help-pipemenu - an Openbox pipemenu for displaying help files
+# manjaro-help-pipemenu - an Openbox pipemenu for displaying help files
 
 readonly HELP='
-al-help-pipemenu an Openbox Pipe Menu for displaying help files
+manjaro-help-pipemenu an Openbox Pipe Menu for displaying help files
 It should normally be called from an openbox menu.
 
 Options (usually passed from the menu):
     -h --help   show this message
 
-If al-help-pipemenu is called with no options (the usual method),
+If manjaro-help-pipemenu is called with no options (the usual method),
 it will output an xml openbox pipemenu displaying various help links,
 '
 for i in "$@"; do
@@ -18,21 +18,15 @@ for i in "$@"; do
     esac
 done
 
-if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
-    echo $"Error: Failed to source /usr/lib/manjaro/common/al-include.cfg" >&2 ; exit 1
+if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2>/dev/null; then
+    echo $"Error: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg" >&2 ; exit 1
 fi
 
 menuStart
-menuSeparator 'ARCHLABS LINUX ONLINE'
-menuItem 'Manjaro Homepage' 'exo-open "https://www.manjarolinux.com/"'
-menuItem 'Manjaro Reddit' 'exo-open "https://www.reddit.com/r/ManjaroLinux/"'
-menuItem 'Manjaro Forum' 'exo-open "https://forum.manjarolinux.com/"'
-menuItem 'Manjaro Google+' 'exo-open "https://plus.google.com/u/0/communities/111177505820810068511"'
-menuItem 'Manjaro Knowledge Base' 'exo-open "https://manjaro-knowledge-base.gitbooks.io/knowledge_base/content/"'
-
-menuSeparator 'ARCHLABS LINUX HELP'
-menuItem 'Forum Basic Help & Support' 'exo-open "https://forum.manjarolinux.com/c/newbie-corner"'
-menuItem 'Scripts, Tutorials & Tips' 'exo-open "https://forum.manjarolinux.com/c/configs-scripts-tutorials-tips"'
+menuSeparator 'MANJARO LINUX ONLINE'
+menuItem 'Manjaro Homepage' 'exo-open "https://www.manjaro.org/"'
+menuItem 'Manjaro Forum' 'exo-open "https://forum.manjar.org/"'
+menuItem 'Manjaro Wiki' 'exo-open "https://wiki.manjaro.org/"'
 
 menuSeparator 'GUIDES'
 

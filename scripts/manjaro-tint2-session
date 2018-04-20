@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
-# al-tint2-session: a script to read a saved Tint2 session file
+# manjaro-tint2-session: a script to read a saved Tint2 session file
 # Copyright (C) 2015 damo <damo@bunsenlabs.org>
 # Borrowed with love by the Manjaro boys.
 
 readonly CONFPATH="$HOME/.config/tint2"
-readonly USAGE="USAGE:\n\tal-tint2-session [OPTIONS] [SESSIONFILE]
+readonly USAGE="USAGE:\n\tmanjaro-tint2-session [OPTIONS] [SESSIONFILE]
 \nOPTIONS:\n\n\t-z, --session\tUse entered SESSIONFILE rather than default
 \t-h, --help\tPrint this usage message and exit
 \n\tWith no command argument, the script uses the default session file
 \n\t'$CONFPATH/sessions/$WM-sessionfile'
 \n\nTo start session at login, add the following line to autostart:
-\n\tal-tint2-session &"
+\n\tmanjaro-tint2-session &"
 
 if ! hash tint2 read &>/dev/null; then
     echo "[ERROR]: Missing Commands. It is required to install 'tint2' 'readline'"
@@ -58,12 +58,12 @@ start_Session() {
             fi
         done < "$SESSIONFILE"
     else
-        echo -e "No suitable sessions found\n\nTry running al-tint2zen or al-panel chooser to setup a session"
+        echo -e "No suitable sessions found\n\nTry running manjaro-tint2zen or manjaro-panel chooser to setup a session"
     fi
 
     sleep 0.5
-    if ! [[ "$(pidof tint2)" ]] && hash al-tint2zen &>/dev/null; then
-        al-tint2zen &
+    if ! [[ "$(pidof tint2)" ]] && hash manjaro-tint2zen &>/dev/null; then
+        manjaro-tint2zen &
     fi
 }
 

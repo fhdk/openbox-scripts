@@ -6,12 +6,12 @@
 #
 #  To start the default conky session at login, add the following line
 #  to config/openbox/autostart:
-#     (sleep 2s && al-conky-session --autostart) &
+#     (sleep 2s && manjaro-conky-session --autostart) &
 
 readonly CPATH="$HOME/.config/conky"
 readonly ICON="/usr/share/icons/Manjaro-Light/64x64/places/distributor-logo-archlabs.png"
 readonly DLG="zenity --question --width=220 --height=120 --window-icon=$ICON"
-readonly USAGE="\vUSAGE:\tal-conky-session [OPTION(S)]...FILES
+readonly USAGE="\vUSAGE:\tmanjaro-conky-session [OPTION(S)]...FILES
 \n\tWith no command argument, the script uses the default
 \t\"\$CONKYPATH/conky-session\" sessionfile
 \vOPTIONS:\n\t--default\t: specify default sessionfile
@@ -19,11 +19,11 @@ readonly USAGE="\vUSAGE:\tal-conky-session [OPTION(S)]...FILES
 \tpath/to/sessionfile1  /path/to/sessionfile2 etc
 \vEXAMPLES:
 \tRun specified sessionfile at login:
-\t\"al-conky-session --autostart /path/to/sessionfile\"
+\t\"manjaro-conky-session --autostart /path/to/sessionfile\"
 \v\tRun default sessionfile, without killing running conkys:
-\t\"al-conky-session --autostart\"
+\t\"manjaro-conky-session --autostart\"
 \v\tRun several conky sessionfiles (option to kill conkys first):
-\t\"al-conky-session --default sessionfile1 sessionfile2 etc\""
+\t\"manjaro-conky-session --default sessionfile1 sessionfile2 etc\""
 
 # mutable session file
 SESSIONFILE="$CPATH/conky-sessionfile"

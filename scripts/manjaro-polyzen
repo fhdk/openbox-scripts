@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# al-polyzen: polybar session manager script for Manjaro
+# manjaro-polyzen: polybar session manager script for Manjaro
 # Copyright (C) 2017 Nathaniel Maia <natemaia10@gmail.com>
 
 if ! hash polybar zenity find read &>/dev/null; then
@@ -22,19 +22,19 @@ if ! [[ $WM ]]; then
 fi
 
 readonly TITLE="Manjaro Polybar Manager"
-readonly ICON="--window-icon=/usr/share/icons/Manjaro-Light/64x64/places/distributor-logo-archlabs.png"
+readonly ICON="--window-icon=/usr/share/icons/manjaro/maia/48x48.png"
 readonly CHECKLIST="zenity --width=400 --height=500 $ICON --list --checklist --multiple"
 readonly QUESTION="zenity --question $ICON --width=300"
 readonly CONFPATH="$HOME/.config/polybar"
 readonly START="$HOME/.config/openbox/autostart"
 readonly USAGE='
-USAGE: al-polyzen [OPTIONS] [SESSIONFILE]
+USAGE: manjaro-polyzen [OPTIONS] [SESSIONFILE]
 \nOPTIONS:
 \t-z, --session\tUse entered SESSIONFILE rather than default
 \t-h, --help\tPrint this usage message and exit
 \nWith no command options, the script uses the current WM-sessionfile
 To start session at login, add the following line to autostart:
-\tsleep 1; al-polybar-session &'
+\tsleep 1; manjaro-polybar-session &'
 
 # SESSIONFILE is mutable by user
 if [[ $WM ]]; then
@@ -95,9 +95,9 @@ find_Bars() {
 create_Session() {
     mkdir -p "$CONFPATH/sessions"
     echo -e "# Polybar $WM Sessionfile
-# DO NO edit this file, it will be overwritten by al-polyzen
+# DO NO edit this file, it will be overwritten by manjaro-polyzen
 # Instead make a custom sessionfile and use the -z FILE or --session FILE option
-# To load session at startup use the following line\n\n# sleep 1; al-polybar-session &\n" > "$SESSIONFILE"
+# To load session at startup use the following line\n\n# sleep 1; manjaro-polybar-session &\n" > "$SESSIONFILE"
     for bar in $ANSWER; do
         for config in "${barPath[@]}"; do
             if grep -q "^\[bar/$bar\]" "$config" && ! grep -q "$config $bar" "$SESSIONFILE"; then
@@ -116,16 +116,16 @@ create_Session() {
 
     sleep 0.5
     if [[ $(pidof polybar) ]]; then
-        if [[ -f $START ]] && ! grep -q "al-polybar-session" "$START"; then
+        if [[ -f $START ]] && ! grep -q "manjaro-polybar-session" "$START"; then
             if grep -q "polybar" "$START"; then
-                sed -i '/polybar/ c sleep 1; al-polybar-session &' "$START"
+                sed -i '/polybar/ c sleep 1; manjaro-polybar-session &' "$START"
             elif grep -q "tint2" "$START"; then
-                sed -i '/tint2/ a sleep 1; al-polybar-session &' "$START"
+                sed -i '/tint2/ a sleep 1; manjaro-polybar-session &' "$START"
                 sed -i '/tint2/d' "$START"
             elif grep -q "nitrogen" "$START"; then
-                sed -i '/nitrogen/ a sleep 1; al-polybar-session &' "$START"
+                sed -i '/nitrogen/ a sleep 1; manjaro-polybar-session &' "$START"
             else
-                sed -i '1s/^/sleep 1; al-polybar-session & \n/' "$START"
+                sed -i '1s/^/sleep 1; manjaro-polybar-session & \n/' "$START"
             fi
         fi
     fi

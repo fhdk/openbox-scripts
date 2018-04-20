@@ -15,8 +15,8 @@ CMD=(gparted nvidia-settings flash.sh etcher mintstick grub-customizer pacli pam
 DESC=(Gparted Nvidia "Flash USB" Etcher Mintstick "Grub Customizer" "Package Manager" "Pamac Manager"
       "Root File Mananger" "Root Terminal")
 
-if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
-    echo "[ERROR]: Failed to source /usr/lib/manjaro/common/al-include.cfg" ; exit 1
+if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2>/dev/null; then
+    echo "[ERROR]: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg" ; exit 1
 fi
 
 menu_Body() {

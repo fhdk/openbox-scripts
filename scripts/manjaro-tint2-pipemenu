@@ -1,19 +1,19 @@
 #!/usr/bin/env bash
 
-# al-tint2-pipemenu - an Openbox pipemenu for tint2 manipulation
+# manjaro-tint2-pipemenu - an Openbox pipemenu for tint2 manipulation
 # Copyright (C) 2015-2016 damo
 # Borrowed with love by the Manjaro boys.
 
-readonly TZEN="al-tint2zen"
+readonly TZEN="manjaro-tint2zen"
 readonly TINT2RC="$HOME/.config/tint2/tint2rc"
 readonly HELP='
-al-tint2-pipemenu an Openbox Pipe Menu for tint2 manipulation
+manjaro-tint2-pipemenu an Openbox Pipe Menu for tint2 manipulation
 It should normally be called from an openbox menu.
 
 Options:
     -h --help   show this message
 
-If al-tint2-pipemenu is called with no options (the usual method),
+If manjaro-tint2-pipemenu is called with no options (the usual method),
 it will output an xml openbox pipemenu for handling tint2 sessions,
 and editing configuration files.
 
@@ -24,8 +24,8 @@ case "$@" in
     -h|--help) echo "$HELP" ; exit 0
 esac
 
-if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
-    echo $"Error: Failed to source /usr/lib/manjaro/al-include.cfg" >&2
+if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2>/dev/null; then
+    echo $"Error: Failed to source /usr/lib/manjaro/manjaro-include.cfg" >&2
     exit 1
 fi
 
@@ -59,8 +59,8 @@ loadTEditmenu() {
 
 getTint2s() {
     menuSubmenu "EditTint2" "Edit Tint2s"
-        if type al-tint2edit &>/dev/null; then
-            menuItem "Tint2 Editor" "al-tint2edit"
+        if type manjaro-tint2edit &>/dev/null; then
+            menuItem "Tint2 Editor" "manjaro-tint2edit"
         fi
         loadTEditmenu
     menuSubmenuEnd
@@ -74,8 +74,8 @@ loadChoosermenu() {
 
 loadRestartmenu() {
     if [[ $(pidof tint2) ]];then
-        if type al-tint2restart &>/dev/null; then
-            menuItem "Restart Tint2" "al-tint2restart"
+        if type manjaro-tint2restart &>/dev/null; then
+            menuItem "Restart Tint2" "manjaro-tint2restart"
         fi
         menuItem "Stop Tint2s" "pkill tint2"
     fi

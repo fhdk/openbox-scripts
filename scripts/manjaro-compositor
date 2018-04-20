@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# al-compositor: an Openbox Pipe Menu for use with compton compositor
+# manjaro-compositor: an Openbox Pipe Menu for use with compton compositor
 # Copyright (C) 2012 Philip Newborough <corenominal@corenominal.org>
 # Copyright (C) 2013 Aleks-Daniel Jakimenko
 # Copyright (C) 2015 John Crawley <john@bunsenlabs.org>
@@ -8,7 +8,7 @@
 readonly EXECXCOMP='compton -b'
 readonly RESTART_ATTEMPTS=20
 readonly HELP='
-al-compositor an openbox pipe menu for use with compton
+manjaro-compositor an openbox pipe menu for use with compton
 It should normally be called from an openbox menu.
 
 Options (passed from the menu):
@@ -19,7 +19,7 @@ Options (passed from the menu):
     --edit      open the compton config file in a text editor
     --watch     restart compton when the config is modified (useful for debugging)
 
-If al-compositor is called with no options (the usual method),
+If manjaro-compositor is called with no options (the usual method),
 it will output an xml openbox pipemenu for handling compositing.
 
 See ~/.config/compton.conf and "man compton" for configuration options.'
@@ -30,8 +30,8 @@ for i in "$@"; do
     esac
 done
 
-if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
-    echo $"Error: Failed to source /usr/lib/manjaro/common/al-include.cfg" >&2 ; exit 1
+if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2>/dev/null; then
+    echo $"Error: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg" >&2 ; exit 1
 fi
 
 declareDependencies compton

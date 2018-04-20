@@ -12,7 +12,7 @@ readonly QUESTION="zenity --question $ICON --width=300"
 readonly CHECKLIST="zenity $ICON --width=450 --height=500 --list --checklist --multiple"
 readonly TEXTENTRY="zenity $ICON --entry --width=350 --height=200"
 readonly MSG="<big>This session will be saved to:</big>\n\n<b>$SESSIONFILE</b>\n"
-readonly USAGE="\vUSAGE:\tal-conkyzen [OPTION]...FILES
+readonly USAGE="\vUSAGE:\tmanjaro-conkyzen [OPTION]...FILES
 \v\tWith no command option the script runs the gui
 \v\t-h,--help   : this USAGE help
 \t-f,--file   : FILEPATH : specify file to save session to
@@ -22,10 +22,10 @@ readonly USAGE="\vUSAGE:\tal-conkyzen [OPTION]...FILES
 \tcheckmarked conkys are started.
 \v\tTo stop a conky just uncheck it, and \"OK\"
 \vEXAMPLES:\n\n\tSave session to a new saved-session file with:
-\v\t\tal-conkyzen -f sessionfile-name
+\v\t\tmanjaro-conkyzen -f sessionfile-name
 \v\tTo start the default conky session at login
 \tadd the following line to autostart:
-\v\tsleep 2 && al-conky-session --autostart &\v"
+\v\tsleep 2 && manjaro-conky-session --autostart &\v"
 
 # Mutable values
 SESSIONFILE="$CPATH/conky-sessionfile"

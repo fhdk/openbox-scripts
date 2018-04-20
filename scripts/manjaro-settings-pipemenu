@@ -10,15 +10,15 @@ NAME="settings"
 PNAME="Settings"
 FAIL_MSG="No Apps Installed"
 
-CMD=(al-panel-chooser arandr nitrogen oomox-gui pamac-manager pavucontrol
+CMD=(manjaro-panel-chooser arandr nitrogen oomox-gui pamac-manager pavucontrol
      gnome-system-monitor wpg rofi-theme-selector xfce4-power-manager-settings
      gnome-disk-utility xfce4-appearance-settings xfce4-settings-manager lxappearance)
 DESC=("Panel Chooser" "Screen Settings" Wallpaper Oomox "Package Manager"
       "Audio Settings" "System Monitor" wpgtk "Rofi Theme" "Power Manager"
       "Disk Uitlity" "Gtk Theme" "Settings Manager" LXappearance)
 
-if ! . "/usr/lib/manjaro/common/al-include.cfg" 2>/dev/null; then
-    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/al-include.cfg" ; exit 1
+if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2>/dev/null; then
+    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg" ; exit 1
 fi
 
 menu_Body() {

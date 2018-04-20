@@ -4,7 +4,7 @@
 # written by Nathaniel Maia, December 2017
 
 # Add something like this to your menu.xml
-# <menu execute="al-filemngr-pipemenu" id="filemngr" label="File Management"/>
+# <menu execute="manjaro-filemngr-pipemenu" id="filemngr" label="File Management"/>
 
 NAME="filemngr"
 PNAME="File Management"
@@ -17,8 +17,8 @@ DESC=(Catfish Thunar PCmanFM SpaceFM Caja Nautilus Nemo Dolphin
       "File Roller" xArchiver
       )
 
-if ! . "/usr/lib/manjaro/common/al-include.cfg" 2> /dev/null; then
-    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/al-include.cfg"
+if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2> /dev/null; then
+    echo -e "[ERROR]: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg"
     exit 1
 fi
 
@@ -42,8 +42,8 @@ else
     menuSeparator "$FAIL_MSG"
     if hash pamac-manager &>/dev/null; then
         menuItem "Install with Package Manager" "pamac-manager"
-    elif hash termite pacli &>/dev/null; then
-        menuItem "Install with Package Manager" "termite -e pacli"
+    elif hash termite pacui &>/dev/null; then
+        menuItem "Install with Package Manager" "termite -e pacui"
     fi
 fi
 menuEnd

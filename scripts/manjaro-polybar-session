@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# al-polybar-session: Polybar session launcher script for Manjaro
+# manjaro-polybar-session: Polybar session launcher script for Manjaro
 # Copyright (C) 2017 Nathaniel Maia <natemaia10@gmail.com>
 
 if ! hash polybar read &>/dev/null; then
@@ -27,17 +27,17 @@ else
     SESSIONFILE="$CONFPATH/sessions/sessionfile"
 fi
 
-readonly HELP='\nUSAGE:\n\tal-polybar-session [OPTIONS] [SESSIONFILE]
+readonly HELP='\nUSAGE:\n\tmanjaro-polybar-session [OPTIONS] [SESSIONFILE]
 \nOPTIONS:
 \t-h, --help\tPrint this usage message and exit
 \t-z, --session\tUse passed sessionfile instead of default
-\nEXAMPLES:\n\n\tRun the default session\n\t"al-polybar-session &"
-\n\tLoad a session saved in ~/.sessionfile\n\t"al-polybar-session -z $HOME/.sessionfile"
+\nEXAMPLES:\n\n\tRun the default session\n\t"manjaro-polybar-session &"
+\n\tLoad a session saved in ~/.sessionfile\n\t"manjaro-polybar-session -z $HOME/.sessionfile"
 \n\nSessions are handled on a per WM basis, for each WM, a WM-sessionfile will be created
 The script will launch the right session for each WM
-Bars in a session can be chosen by running "al-polyzen" or manually configure sessionfile
+Bars in a session can be chosen by running "manjaro-polyzen" or manually configure sessionfile
 \n\nTo have session run at startup add the following line to your autostart:
-\n\tsleep1; al-polybar-session &'
+\n\tsleep1; manjaro-polybar-session &'
 
 start_Session() {
     if [[ -f $SESSIONFILE ]]; then
@@ -51,11 +51,11 @@ start_Session() {
         done < "$SESSIONFILE"
     else
         echo -e "No sessionfile found
-        \n\tPlease setup your config directory then run 'al-polyzen' to setup a sessionfile in\n\n\t'$CONFPATH'"
+        \n\tPlease setup your config directory then run 'manjaro-polyzen' to setup a sessionfile in\n\n\t'$CONFPATH'"
     fi
     sleep 0.5
-    if ! [[ $(pidof polybar) ]] && hash al-polyzen &>/dev/null; then
-        al-polyzen &
+    if ! [[ $(pidof polybar) ]] && hash manjaro-polyzen &>/dev/null; then
+        manjaro-polyzen &
     fi
 }
 
