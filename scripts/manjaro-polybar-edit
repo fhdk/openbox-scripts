@@ -33,7 +33,7 @@ edit_Configs() {
         for name in $ANSWER; do
             FULL="$HOME/.config/$name"
             if hash exo-open &>/dev/null; then
-                (exo-open "$FULL" &) ; break
+                (exo-open "$FULL" &)
             elif hash termite &>/dev/null; then
                 (termite -e "$EDITOR $FULL" &>/dev/null) ; break
             elif hash st &>/dev/null; then
