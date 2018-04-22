@@ -179,6 +179,11 @@
 			<command>exo-open --launch WebBrowser</command>
 		</action>
 	</item>
+	<item label="Mail Reader">
+		<action name="Execute">
+			<command>exo-open --launch MailReader</command>
+		</action>
+	</item>
 	<item label="Text Editor">
 		<action name="Execute">
 			<command>subl3</command>

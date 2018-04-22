@@ -15,13 +15,13 @@ include-file = $HOME/.config/polybar/modules.conf
 inherit = bar/master
 
 ; Use $ xrandr -q | grep " connected" | cut -d ' ' -f1
-monitor = 
+monitor =  HDMI-1
 
 tray-position = center
-tray-padding = 2
+tray-padding = 
 ;tray-transparent = true
 ;tray-background = #0063ff
 
-modules-left   = manjaro workspaces
+modules-left   = manjaro workspaces window_switch
 modules-center = 
-modules-right  = window_switch pkg memory temperature coreuse network volume clock
+modules-right  = pkg memory temperature coreuse network volume clock
