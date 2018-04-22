@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openbox_menu>
-
 <menu id="accessories" label="Accessories">
 	<item label="Calculator">
 		<action name="Execute">
@@ -10,7 +9,7 @@
 	</item>
 	<item label="Archive Manager">
 		<action name="Execute">
-			<command>engrampa</command>
+			<command>file-roller</command>
 		</action>
 	</item>
 	<item label="PDF Viewer">
@@ -53,19 +52,19 @@
 </menu>
 <menu id="preferences" label="Preferences">
 	<menu id="obConfig" label="Openbox">
-		<item label="Settings Editor">
+		<item label="LX Appearance Configuration">
 			<action name="Execute">
 				<command>lxappearance</command>
 			</action>
 		</item>
+		<item label="ObConf Appearance Configuration">
+			<action name="Execute">
+				<command>obconf</command>
+			</action>
+		</item>		
 		<item label="Menu Editor">
 			<action name="Execute">
 				<command>kickshaw</command>
-			</action>
-		</item>
-		<item label="Keybind Editor">
-			<action name="Execute">
-				<command>obkey</command>
 			</action>
 		</item>
 		<item label="Autostart Editor">
@@ -73,20 +72,25 @@
 				<command>ob-autostart</command>
 			</action>
 		</item>
-		<separator/>
-		<item label="Edit menu.xml">
+		<item label="Keybind Editor">
+			<action name="Execute">
+				<command>obkey</command>
+			</action>
+		</item>
+		<separator label="Configuration files"/>
+		<item label="Open autostart">
+			<action name="Execute">
+				<command>exo-open ~/.config/openbox/autostart</command>
+			</action>
+		</item>
+		<item label="Open menu.xml">
 			<action name="Execute">
 				<command>exo-open ~/.config/openbox/menu.xml</command>
 			</action>
 		</item>
-		<item label="Edit rc.xml">
+		<item label="Open rc.xml">
 			<action name="Execute">
 				<command>exo-open ~/.config/openbox/rc.xml</command>
-			</action>
-		</item>
-		<item label="Edit autostart">
-			<action name="Execute">
-				<command>exo-open ~/.config/openbox/autostart</command>
 			</action>
 		</item>
 		<separator/>
@@ -118,16 +122,6 @@
 		</action>
 	</item>
 	<separator/>
-	<item label="Audio Settings">
-		<action name="Execute">
-			<command>pavucontrol</command>
-		</action>
-	</item>
-	<item label="Screen Layout">
-		<action name="Execute">
-			<command>arandr</command>
-		</action>
-	</item>
 </menu>
 <menu id="system-settings" label="System Settings">
 	<item label="Pamac">
@@ -142,7 +136,17 @@
 	</item>
 	<item label="Root File Manager">
 		<action name="Execute">
-			<command>gksu pcmanfm</command>
+			<command>gksu thunar</command>
+		</action>
+	</item>
+	<item label="Audio Settings">
+		<action name="Execute">
+			<command>pavucontrol</command>
+		</action>
+	</item>
+	<item label="Screen Layout">
+		<action name="Execute">
+			<command>arandr</command>
 		</action>
 	</item>
 	<item label="GParted">
@@ -155,7 +159,7 @@
 			<command>exo-preferred-applications</command>
 		</action>
 	</item>
-	<item label="System settings">
+	<item label="System Settings">
 		<action name="Execute">
 			<command>xfce4-settings-manager</command>
 		</action>
@@ -188,10 +192,9 @@
 		<action name="Execute">
 			<command>subl3</command>
 		</action>
-	</item>
-	<separator/>
+	</item>	<separator/>
 	<menu id="applications" label="Applications" execute="/usr/bin/obmenu-generator -S ~/.config/obmenu-generator/applications.pl"/>
-	<menu id="accessories"/>
+	<menu id="accessories"/>	
 	<menu id="screenshot"/>
 	<separator/>
 	<menu id="pipe-placesmenu" label="Places" execute="manjaro-places-pipemenu --recent ~/"/>
