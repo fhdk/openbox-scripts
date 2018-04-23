@@ -93,7 +93,7 @@
 				<command>exo-open ~/.config/openbox/rc.xml</command>
 			</action>
 		</item>
-		<separator/>
+		<separator label="Reload Configuration"/>
 		<item label="Openbox Reconfigure">
 			<action name="Reconfigure"/>
 		</item>
@@ -121,7 +121,6 @@
 			<command>rofi-theme-selector</command>
 		</action>
 	</item>
-	<separator/>
 </menu>
 <menu id="system-settings" label="System Settings">
 	<item label="Pamac">
