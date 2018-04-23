@@ -4,7 +4,7 @@
 	<icon>utilities-terminal</icon>
 	<name>Open Terminal Here</name>
 	<unique-id>1521317528494802-1</unique-id>
-	<command>exo-open --working-directory %f --launch TerminalEmulator</command>
+	<command>exo-open --working-directory %f %d --launch TerminalEmulator</command>
 	<description>Open terminal here</description>
 	<patterns>*</patterns>
 	<startup-notify/>

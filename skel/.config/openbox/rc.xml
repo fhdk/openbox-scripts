@@ -420,6 +420,11 @@
         <command>skippy-xd</command>
       </action>
     </keybind>
+    <keybind key="W-Return">
+      <action name="Execute">
+        <command>exo-open --launch TerminalEmulator</command>
+      </action>
+    </keybind>
     <keybind key="A-F1">
       <action name="Execute">
         <command>rofr.sh -r</command>
@@ -432,7 +437,7 @@
     </keybind>
     <keybind key="C-A-l">
       <action name="Execute">
-        <command>rofr.sh -l</command>
+        <command>lockscreen</command>
       </action>
     </keybind>
     <keybind key="C-A-Delete">
@@ -446,7 +451,7 @@
     <keybind key="C-S-BackSpace">
       <action name="Restart"/>
     </keybind>
-    <keybind key="C-S-Enter">
+    <keybind key="C-S-Return">
       <action name="Reconfigure"/>
     </keybind>
     <keybind key="W-Escape">

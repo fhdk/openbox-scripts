@@ -1,5 +1,3 @@
-~/.screenlayout/dual-head.sh &
-
 # compton
 sleep 1; manjaro-compositor --start &
 
@@ -8,8 +6,9 @@ sleep 1; manjaro-compositor --start &
 numlockx &
 
 # restore wallpaper
-sleep 1; nitrogen --restore &
-sleep 1; manjaro-polybar-session &
+sleep 0.5; nitrogen --restore &
+sleep 0.5; manjaro-polybar-session &
+manjaro-conky-session &
 
 # Openbox autostart
 sleep 1; ob-autostart -d &

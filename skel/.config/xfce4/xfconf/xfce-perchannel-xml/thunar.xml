@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <channel name="thunar" version="1.0">
-  <property name="last-view" type="string" value="ThunarIconView"/>
+  <property name="last-view" type="string" value="ThunarDetailsView"/>
   <property name="last-icon-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_NORMAL"/>
-  <property name="last-separator-position" type="int" value="170"/>
-  <property name="last-show-hidden" type="bool" value="true"/>
-  <property name="last-window-width" type="int" value="739"/>
-  <property name="last-window-height" type="int" value="581"/>
+  <property name="last-separator-position" type="int" value="200"/>
+  <property name="last-show-hidden" type="bool" value="false"/>
+  <property name="last-window-width" type="int" value="1065"/>
+  <property name="last-window-height" type="int" value="1015"/>
   <property name="last-window-maximized" type="bool" value="false"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_SMALLER"/>
-  <property name="last-details-view-column-widths" type="string" value="50,124,50,50,695,50,50,57,63"/>
+  <property name="last-details-view-column-widths" type="string" value="50,113,50,50,362,50,50,56,63,334"/>
   <property name="last-location-bar" type="string" value="ThunarLocationEntry"/>
+  <property name="misc-single-click" type="bool" value="false"/>
+  <property name="misc-text-beside-icons" type="bool" value="true"/>
+  <property name="last-sort-column" type="string" value="THUNAR_COLUMN_NAME"/>
+  <property name="last-sort-order" type="string" value="GTK_SORT_ASCENDING"/>
 </channel>
