@@ -3,7 +3,7 @@ sleep 1; manjaro-compositor --start &
 
 #$HOME/.config/setup &
 # enable numlock, commented out for laptop users
-numlockx &
+#numlockx &
 
 # restore wallpaper
 sleep 0.5; nitrogen --restore &
