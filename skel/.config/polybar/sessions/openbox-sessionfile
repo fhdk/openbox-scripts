@@ -5,4 +5,4 @@
 
 # sleep 1; manjaro-polybar-session &
 
-/home/fh/.config/polybar/config openbox-bar
+~/.config/polybar/config openbox-bar
