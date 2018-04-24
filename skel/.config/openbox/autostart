@@ -1,7 +1,6 @@
 # compton
 sleep 1; manjaro-compositor --start &
 
-#$HOME/.config/setup &
 # enable numlock, commented out for laptop users
 #numlockx &
 
