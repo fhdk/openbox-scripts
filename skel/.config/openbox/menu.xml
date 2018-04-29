@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <openbox_menu>
+
 <menu id="accessories" label="Accessories">
 	<item label="Calculator">
 		<action name="Execute">
@@ -61,7 +62,7 @@
 			<action name="Execute">
 				<command>obconf</command>
 			</action>
-		</item>		
+		</item>
 		<item label="Menu Editor">
 			<action name="Execute">
 				<command>kickshaw</command>
@@ -191,9 +192,10 @@
 		<action name="Execute">
 			<command>subl3</command>
 		</action>
-	</item>	<separator/>
+	</item>
+	<separator/>
 	<menu id="applications" label="Applications" execute="/usr/bin/obmenu-generator -S ~/.config/obmenu-generator/applications.pl"/>
-	<menu id="accessories"/>	
+	<menu id="accessories"/>
 	<menu id="screenshot"/>
 	<separator/>
 	<menu id="pipe-placesmenu" label="Places" execute="manjaro-places-pipemenu --recent ~/"/>
