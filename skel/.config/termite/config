@@ -20,16 +20,14 @@ filter_unmatched_urls = true
 
 # *************************
 [colors]
-#background = #292f34
 background = rgba(41,47,52,0.80)
 foreground = #d8d8d8
 foreground_bold = #d8d8d8
-cursor = #1ABB9B
 
 # Black, Gray, Silver, White
 color0 = #292f34
-color8 = #585858
 color7 = #d8d8d8
+color8 = #0a6355
 color15 = #f8f8f8
 
 # Red
@@ -45,13 +43,13 @@ color3 = #f7ca88
 color11 = #f7ca88
 
 # Blue
-color4 = #f7ca88
-color12 = #f7ca88
+color4 = #006a78
+color12 = #006a78
 
 # Purple
 color5 = #b48ead
 color13 = #b48ead
 
 # Teal
-color6 = #1ABB9B
-color14 = #1ABB9B
+color6 = #1abb9b
+color14 = #1abb9b
