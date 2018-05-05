@@ -11,8 +11,9 @@ image="$(mktemp).png"
 shot=(import -window root)
 shot_custom=false
 # get path where the script is located to find the lock icon
-scriptpath=$(readlink -f -- "$0")
-scriptpath=${scriptpath%/*}
+#scriptpath=$(readlink -f -- "$0")
+#scriptpath=${scriptpath%/*}
+iconpath="/usr/share/manjaro-openbox"
 
 OPTIONS="Options:
     -h, --help   This help menu.
@@ -47,7 +48,7 @@ if "$shot_custom" && [[ $# -gt 0 ]]; then
 fi
 
 command -- "${shot[@]}" "$image"
-ICON="$scriptpath/icons/lock.png"
+ICON="$iconpath/icons/lock.png"
 
 # l10n support
 text="Type password to unlock"
