@@ -24,51 +24,51 @@ fi
 
 menuStart
 menuSeparator 'MANJARO LINUX ONLINE'
-menuItem 'Manjaro Homepage' 'exo-open "https://www.manjaro.org/"'
-menuItem 'Manjaro Forum' 'exo-open "https://forum.manjar.org/"'
-menuItem 'Manjaro Wiki' 'exo-open "https://wiki.manjaro.org/"'
+menuItem 'Manjaro Homepage' 'xdg-open "https://www.manjaro.org/"'
+menuItem 'Manjaro Forum' 'xdg-open "https://forum.manjar.org/"'
+menuItem 'Manjaro Wiki' 'xdg-open "https://wiki.manjaro.org/"'
 
 menuSeparator 'GUIDES'
 
 menuSubmenu 'OpenboxWWW' 'Openbox'
-menuItem 'Openbox Homepage' 'exo-open "http://openbox.org/"'
-menuItem 'Openbox Getting Started' 'exo-open "http://openbox.org/wiki/Help:Getting_started"'
-menuItem 'Openbox Documentation' 'exo-open "http://openbox.org/wiki/Help:Contents"'
-menuItem 'Openbox FAQs' 'exo-open "http://openbox.org/wiki/Help:FAQ"'
-menuItem 'Arch Wiki Openbox Guide' 'exo-open "http://wiki.archlinux.org/index.php/Openbox"'
-menuItem 'Debian Wiki Openbox Guide' 'exo-open "https://wiki.debian.org/Openbox"'
-menuItem 'Urukramas Openbox Guide' 'exo-open "https://urukrama.wordpress.com/openbox-faq/"'
-menuItem 'Openbox Reddit' 'exo-open "https://www.reddit.com/r/openbox/"'
+menuItem 'Openbox Homepage' 'xdg-open "http://openbox.org/"'
+menuItem 'Openbox Getting Started' 'xdg-open "http://openbox.org/wiki/Help:Getting_started"'
+menuItem 'Openbox Documentation' 'xdg-open "http://openbox.org/wiki/Help:Contents"'
+menuItem 'Openbox FAQs' 'xdg-open "http://openbox.org/wiki/Help:FAQ"'
+menuItem 'Openbox Guide Arch Wiki' 'xdg-open "http://wiki.archlinux.org/index.php/Openbox"'
+menuItem 'Openbox Guide Debian Wiki' 'xdg-open "https://wiki.debian.org/Openbox"'
+menuItem 'Urukramas Openbox Guide' 'xdg-open "https://urukrama.wordpress.com/openbox-faq/"'
+menuItem 'Openbox Reddit' 'xdg-open "https://www.reddit.com/r/openbox/"'
 menuSubmenuEnd
 
 menuSubmenu 'Tint2WWW' 'Tint2'
-menuItem 'Tint2 Wiki: FAQ' 'exo-open "https://gitlab.com/o9000/tint2/wikis/FAQ"'
-menuItem 'Tint2 Wiki: Configuration' 'exo-open "https://gitlab.com/o9000/tint2/blob/master/doc/tint2.md"'
-menuItem 'Tint2 Forum Thread' 'exo-open "https://forums.bunsenlabs.org/viewtopic.php?id=254"'
+menuItem 'Tint2 Wiki: FAQ' 'xdg-open "https://gitlab.com/o9000/tint2/wikis/FAQ"'
+menuItem 'Tint2 Wiki: Configuration' 'xdg-open "https://gitlab.com/o9000/tint2/blob/master/doc/tint2.md"'
+menuItem 'Tint2 Forum Thread' 'xdg-open "https://forums.bunsenlabs.org/viewtopic.php?id=254"'
 menuSubmenuEnd
 
 menuSubmenu 'PolybarWWW' 'Polybar'
-menuItem 'Polybar GitHub' 'exo-open "https://github.com/jaagr/polybar"'
-menuItem 'Polybar Wiki' 'exo-open "https://github.com/jaagr/polybar/wiki"'
-menuItem 'Polybar Inspiration' 'exo-open "https://www.reddit.com/r/unixporn/search?q=polybar&restrict_sr=on&sort=new&t=all"'
+menuItem 'Polybar GitHub' 'xdg-open "https://github.com/jaagr/polybar"'
+menuItem 'Polybar Wiki' 'xdg-open "https://github.com/jaagr/polybar/wiki"'
+menuItem 'Polybar Inspiration' 'xdg-open "https://www.reddit.com/r/unixporn/search?q=polybar&restrict_sr=on&sort=new&t=all"'
 menuSubmenuEnd
 
 menuSubmenu 'RofitWWW' 'Rofi'
-menuItem 'Rofi GitHub' 'exo-open "https://github.com/DaveDavenport/rofi"'
-menuItem 'Rofi Wiki' 'exo-open "https://github.com/DaveDavenport/rofi/wiki"'
-menuItem 'Rofi Inspiration' 'exo-open "https://www.reddit.com/r/unixporn/search?q=rofi&restrict_sr=on&sort=new&t=all"'
+menuItem 'Rofi GitHub' 'xdg-open "https://github.com/DaveDavenport/rofi"'
+menuItem 'Rofi Wiki' 'xdg-open "https://github.com/DaveDavenport/rofi/wiki"'
+menuItem 'Rofi Inspiration' 'xdg-open "https://www.reddit.com/r/unixporn/search?q=rofi&restrict_sr=on&sort=new&t=all"'
 menuSubmenuEnd
 
 menuSubmenu 'ConkyWWW' 'Conky'
-menuItem 'Conky Wiki' 'exo-open "https://github.com/brndnmtthws/conky/wiki"'
-menuItem 'Conky Inspiration' 'exo-open "https://www.reddit.com/r/unixporn/search?q=conky&restrict_sr=on&sort=new&t=all"'
-menuItem 'Conky Archive' 'exo-open "http://crunchbang.org/forums/viewtopic.php?pid=371424"'
-menuItem 'Conky Reddit' 'exo-open "https://www.reddit.com/r/conky/"'
+menuItem 'Conky Wiki' 'xdg-open "https://github.com/brndnmtthws/conky/wiki"'
+menuItem 'Conky Inspiration' 'xdg-open "https://www.reddit.com/r/unixporn/search?q=conky&restrict_sr=on&sort=new&t=all"'
+menuItem 'Conky Archive' 'xdg-open "http://crunchbang.org/forums/viewtopic.php?pid=371424"'
+menuItem 'Conky Reddit' 'xdg-open "https://www.reddit.com/r/conky/"'
 menuSubmenuEnd
 
 menuSubmenu 'NeofetchWWW' 'Neofetch'
-menuItem 'Neofetch GitHub' 'exo-open "https://github.com/dylanaraps/neofetch"'
-menuItem 'Neofetch Wiki' 'exo-open "https://github.com/dylanaraps/neofetch/wiki"'
+menuItem 'Neofetch GitHub' 'xdg-open "https://github.com/dylanaraps/neofetch"'
+menuItem 'Neofetch Wiki' 'xdg-open "https://github.com/dylanaraps/neofetch/wiki"'
 menuSubmenuEnd
 
 menuEnd
