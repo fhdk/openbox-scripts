@@ -12,11 +12,11 @@ if [[ "$1" == '-dynamic' ]] || [[ "$1" == '--dynamic' ]] || [[ "$1" == '-d' ]]; 
             cp "$BASE" "$BACK"
             obmenu-generator -p
         else
-            notify-send 'Ooops!' 'Unable to find ~/.config/openbox/menu.xml.. Make sure it exists and try again.'
+            notify-send 'Ooops!' 'Unable to find ~/.config/openbox/menu.xml. Make sure it exists and try again.'
             exit 1
         fi
     else
-        notify-send 'Ooops!' 'obmenu-generator is required.. Make sure it is installed and try again.'
+        notify-send 'Ooops!' 'obmenu-generator is required. Make sure it is installed and try again.'
         exit 1
     fi
 elif [[ "$1" == '-static' ]] || [[ "$1" == '--static' ]] || [[ "$1" == '-s' ]]; then

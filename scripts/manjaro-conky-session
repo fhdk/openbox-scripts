@@ -9,8 +9,11 @@
 #     (sleep 2s && manjaro-conky-session --autostart) &
 
 readonly CPATH="$HOME/.config/conky"
-readonly ICON="/usr/share/icons/Manjaro-Light/64x64/places/distributor-logo-archlabs.png"
+
+readonly ICON="/usr/share/icons/manjaro/maia/48x48.png"
+
 readonly DLG="zenity --question --width=220 --height=120 --window-icon=$ICON"
+
 readonly USAGE="\vUSAGE:\tmanjaro-conky-session [OPTION(S)]...FILES
 \n\tWith no command argument, the script uses the default
 \t\"\$CONKYPATH/conky-session\" sessionfile

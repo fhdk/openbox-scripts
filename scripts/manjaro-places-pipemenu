@@ -45,7 +45,7 @@ Options:
 
 Configuration:
     /usr/bin/manjaro-places-pipemenu may be edited directly for system-wide changes,
-    or copied to ~/bin and edited there for per-user changes.
+    or copied to ~/.bin and edited there for per-user changes.
 
 Editable variables and functions, at the top of the file:
     recent_script       path to a script outputting an openbox pipemenu

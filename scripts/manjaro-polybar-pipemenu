@@ -35,6 +35,8 @@ Editmenu() {
                 [[ $CONF = polybar ]] && CONF=$CONFIG
                 if hash exo-open &>/dev/null; then
                     menuItem "$CONF" "exo-open $CONFIG"
+                elif hash xdg-open &>/dev/null; then
+                    menuItem "$CONF" "xdg-open $CONFIG"
                 elif hash termite &>/dev/null; then
                     menuItem "$CONF" "termite -e '$EDITOR $CONFIG'"
                 elif hash st &>/dev/null; then

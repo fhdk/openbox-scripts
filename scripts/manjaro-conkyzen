@@ -6,7 +6,7 @@
 
 readonly CPATH="$HOME/.config/conky"
 readonly TITLE="Manjaro Conky Manager"
-readonly ICON="--window-icon=/usr/share/icons/Manjaro-Light/64x64/places/distributor-logo-archlabs.png"
+readonly ICON="--window-icon=/usr/share/icons/manjaro/maia/48x48.png"
 readonly INFO="zenity --info $ICON --width=200 --height=100"
 readonly QUESTION="zenity --question $ICON --width=300"
 readonly CHECKLIST="zenity $ICON --width=450 --height=500 --list --checklist --multiple"

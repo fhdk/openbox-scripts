@@ -20,7 +20,7 @@ readonly HELP='\tmanjaro-kb-pipemenu an Openbox Pipe Menu for displaying keybind
 \nIf manjaro-keyboard-pipemenu is called with no options (the usual method),
 it will output an xml openbox pipemenu for displaying keybindings.
 \tNOTE: Some of the functionality of this pipemenu depends on the script
-/usr/bin/manjaro-kb which is provided by the package "manjaro-utilities"'
+/usr/bin/manjaro-kb which is provided by the package "manjaro-scripts"'
 
 case "$@" in
     -h|--help) echo -e "$HELP" ; exit 0
@@ -33,7 +33,7 @@ fi
 
 if ! type "$KBSCRIPT" &>/dev/null; then
     menuStart
-    menuSeparator "$KBSCRIPT is not available. Try installing manjaro-pipemenus."
+    menuSeparator "$KBSCRIPT is not available. Try installing manjaro-scripts."
     menuEnd
     exit 1
 fi
@@ -44,6 +44,8 @@ if [[ $1 = '--rcedit' ]]; then
     cp "$RCPATH" "$RCBKP"
     if hash exo-open &>/dev/null; then
         exo-open "$RCPATH"
+    elif hash xdg-open &>/dev/null; then
+        xdg-open "$RCPATH"
     else
         termite -e "$EDITOR $RCPATH"
     fi

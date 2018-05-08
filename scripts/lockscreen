@@ -13,7 +13,7 @@ shot_custom=false
 # get path where the script is located to find the lock icon
 #scriptpath=$(readlink -f -- "$0")
 #scriptpath=${scriptpath%/*}
-iconpath="/usr/share/manjaro-openbox"
+iconpath="/usr/share/manjaro"
 
 OPTIONS="Options:
     -h, --help   This help menu.
