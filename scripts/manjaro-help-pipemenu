@@ -25,7 +25,7 @@ fi
 menuStart
 menuSeparator 'MANJARO LINUX ONLINE'
 menuItem 'Manjaro Homepage' 'xdg-open "https://www.manjaro.org/"'
-menuItem 'Manjaro Forum' 'xdg-open "https://forum.manjar.org/"'
+menuItem 'Manjaro Forum' 'xdg-open "https://forum.manjaro.org/"'
 menuItem 'Manjaro Wiki' 'xdg-open "https://wiki.manjaro.org/"'
 
 menuSeparator 'GUIDES'
