@@ -9,11 +9,19 @@
 # <menu id="places" label="Places" execute="/path/to/manjaro-places-pipemenu --recent ~/" />
 # make sure you have manjaro-recent-files-pipemenu, and enter its path below.
 
-readonly terminal=termite
-readonly text_editor=geany
-readonly open_folder_cmd=thunar
-readonly default_open_cmd=exo-open
 readonly recent_script=/usr/bin/manjaro-recent-files-pipemenu
+readonly terminal=termite
+readonly text_editor=subl3
+if hash "thunar" &>/dev/null; then
+    readonly open_folder_cmd=thunar
+else
+    readonly open_folder_cmd=pcmanfm
+fi
+if hash "exo-open" &>dev/null; then
+    readonly default_open_cmd=exo-open
+else
+    readonly default_open_cmd=xdg-open
+fi
 
 open_file() {
     if hash "$default_open_cmd" &>/dev/null; then
