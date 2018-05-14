@@ -57,12 +57,12 @@ while getopts ":hvqwcbmrl" opt; do
             rofi -location 1 -yoffset 40 -xoffset 10 \
                 -modi run,drun -show drun -line-padding 50 \
                 -columns 2 -padding 50 -hide-scrollbar \
-                -show-icons -drun-icon-theme "Vibrancy-Light-Orange"
+                -show-icons -drun-icon-theme "Papirus-Adapta-Nokto-Maia"
             ;;
         r)
             rofi -modi run,drun -show drun -line-padding 50 \
                 -columns 2 -padding 50 -hide-scrollbar \
-                -show-icons -drun-icon-theme "Vibrancy-Light-Orange" 
+                -show-icons -drun-icon-theme "Papirus-Adapta-Nokto-Maia"
             ;;
         l)
             ANS=$(echo " Lock| Logout| Reboot| Shutdown" | \
@@ -85,3 +85,6 @@ shift $((OPTIND - 1))
 
 
 exit 0
+
+# DO NOT EDIT! This file will be overwritten by LXAppearance.
+# Any customization should be done in ~/.gtkrc-2.0.mine instead.
