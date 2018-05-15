@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# al-tint2zen: a Manjaro tint2 selection and switcher script
+# manjaro-tint2zen: a Manjaro tint2 selection and switcher script
 # Copyright (C) 2015 damo <damo@bunsenlabs.org>
 # Copyright (C) 2017 Nathaniel Maia <natemaia10@gmail.com>
 
@@ -35,7 +35,7 @@ readonly USAGE="USAGE: [OPTIONS] [SESSIONFILE]
 \nWith no command argument, the script uses the current WM session file
 \n\t\t'$CONFPATH/sessions/$WM-sessionfile'
 \nTo start session at login, add the following line to autostart:
-\tsleep 1; al-tint2-session &"
+\tsleep 1; manjaro-tint2-session &"
 
 # SESSIONFILE is mutable by user
 if [[ $WM ]]; then
@@ -83,9 +83,9 @@ find_tints() {
 
 setup_Session() {
     mkdir -p $CONFPATH/sessions; echo -e "# Tint2 $WM Sessionfile
-# DO NO edit this file, it will be overwritten by al-tint2zen
+# DO NO edit this file, it will be overwritten by manjaro-tint2zen
 # Make a custom sessionfile instead and use -z or --session FILE option
-# To load session at startup use the following line\n\n# al-tint2-session &\n" > $SESSIONFILE
+# To load session at startup use the following line\n\n# manjaro-tint2-session &\n" > $SESSIONFILE
     for name in $ANSWER; do
         for file in "${FILES[@]}"; do
             if grep -q "$file" "$SESSIONFILE" || [[ $(basename "$file") != "$name" ]]; then
@@ -104,21 +104,21 @@ setup_Session() {
             tint2 -c "$c" &>/dev/null &
         fi
     done < "$SESSIONFILE"
-    if hash al-compositor &>/dev/null; then al-compositor --restart; fi
+    if hash manjaro-compositor &>/dev/null; then manjaro-compositor --restart; fi
 
     sleep 0.5
     if [[ $(pidof tint2) ]]; then
-        if [[ -f $START ]] && ! grep -q "al-tint2-session" "$START"; then
+        if [[ -f $START ]] && ! grep -q "manjaro-tint2-session" "$START"; then
             if grep -q "tint2" "$START"; then
-                sed -i '/tint2/ a sleep 1; al-tint2-session &' "$START"
+                sed -i '/tint2/ a sleep 1; manjaro-tint2-session &' "$START"
                 sed -i '/tint2/d' "$START"
             elif grep -q "polybar" "$START"; then
-                sed -i '/polybar/ a sleep 1; al-tint2-session &' "$START"
+                sed -i '/polybar/ a sleep 1; manjaro-tint2-session &' "$START"
                 sed -i '/polybar/d' "$START"
             elif grep -q "nitrogen" "$START"; then
-                sed -i '/nitrogen/ a sleep 1; al-tint2-session &' "$START"
+                sed -i '/nitrogen/ a sleep 1; manjaro-tint2-session &' "$START"
             else
-                sed -i '1s/^/al-tint2-session & \n/' "$START"
+                sed -i '1s/^/manjaro-tint2-session & \n/' "$START"
             fi
         fi
     fi
