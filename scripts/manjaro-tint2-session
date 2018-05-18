@@ -9,7 +9,7 @@ readonly USAGE="USAGE:\n\tmanjaro-tint2-session [OPTIONS] [SESSIONFILE]
 \nOPTIONS:\n\n\t-z, --session\tUse entered SESSIONFILE rather than default
 \t-h, --help\tPrint this usage message and exit
 \n\tWith no command argument, the script uses the default session file
-\n\t'$CONFPATH/sessions/$WM-sessionfile'
+\n\t"$CONFPATH/sessions/$WM-sessionfile"
 \n\nTo start session at login, add the following line to autostart:
 \n\tmanjaro-tint2-session &"
 
@@ -37,6 +37,7 @@ if [[ $WM ]]; then
 else
     SESSIONFILE="$CONFPATH/sessions/sessionfile"
 fi
+
 case $1 in
     -h|-H|--help) clear ; echo -e "$USAGE" ; exit 0 ;;
     -z|*session)
@@ -62,8 +63,12 @@ start_Session() {
     fi
 
     sleep 0.5
-    if ! [[ "$(pidof tint2)" ]] && hash manjaro-tint2zen &>/dev/null; then
-        manjaro-tint2zen &
+    if ! [[ $(pidof tint2) ]]; then
+        tint2 -c $CONFPATH/tint2rc
+        sleep 0.5
+        if ! [[ $(pidof tint2) ]] && hash manjaro-tint2zen &>/dev/null; then
+            manjaro-tint2zen &
+        fi
     fi
 }
 
