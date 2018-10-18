@@ -3,10 +3,12 @@
 # manjaro-tint2zen: a Manjaro tint2 selection and switcher script
 # Copyright (C) 2015 damo <damo@bunsenlabs.org>
 # Copyright (C) 2017 Nathaniel Maia <natemaia10@gmail.com>
+# Modified by fhdk@manjaro
 
+MISSING_PKGS="[ERROR]: Missing Commands. It is required to install 'tint2' 'zenity' 'findutils' 'readline'"
 
 if ! hash tint2 zenity read find &>/dev/null; then
-    echo "[ERROR]: Missing Commands. It is required to install 'tint2' 'zenity' 'findutils' 'readline'"
+    echo ${MISSING_PKGS}
     exit 1
 fi
 
@@ -111,10 +113,10 @@ setup_Session() {
         if [[ -f $START ]] && ! grep -q "manjaro-tint2-session" "$START"; then
             if grep -q "tint2" "$START"; then
                 sed -i '/tint2/ a sleep 1; manjaro-tint2-session &' "$START"
-                sed -i '/tint2/d' "$START"
+                # sed -i '/tint2/d' "$START"
             elif grep -q "polybar" "$START"; then
                 sed -i '/polybar/ a sleep 1; manjaro-tint2-session &' "$START"
-                sed -i '/polybar/d' "$START"
+                # sed -i '/polybar/d' "$START"
             elif grep -q "nitrogen" "$START"; then
                 sed -i '/nitrogen/ a sleep 1; manjaro-tint2-session &' "$START"
             else

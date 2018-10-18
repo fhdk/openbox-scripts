@@ -121,7 +121,7 @@ create_Session() {
                 sed -i '/polybar/ c sleep 1; manjaro-polybar-session &' "$START"
             elif grep -q "tint2" "$START"; then
                 sed -i '/tint2/ a sleep 1; manjaro-polybar-session &' "$START"
-                sed -i '/tint2/d' "$START"
+                # sed -i '/tint2/d' "$START"
             elif grep -q "nitrogen" "$START"; then
                 sed -i '/nitrogen/ a sleep 1; manjaro-polybar-session &' "$START"
             else

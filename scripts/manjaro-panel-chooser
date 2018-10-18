@@ -62,7 +62,7 @@ setup_polybar() {
         sed -i '/base/{n;N;N;d}' "$PPATH/config"
         sed -i "/base/ a include-file = ${HOME}/.config/polybar/master.conf" "$PPATH/config"
         sed -i "/base/ a include-file = ${HOME}/.config/polybar/modules.conf" "$PPATH/config"
-        sed -i "s/liveuser/${USER}/g" "$PSESSION"
+        sed -i "s/manjaro/${USER}/g" "$PSESSION"
     fi
 
     if [[ -f $START ]] && ! grep -q "manjaro-polybar-session" "$START"; then
@@ -70,7 +70,7 @@ setup_polybar() {
             sed -i '/polybar/ c sleep 1; manjaro-polybar-session &' "$START"
         elif grep -q "tint2" "$START"; then
             sed -i '/tint2/ a sleep 1; manjaro-polybar-session &' "$START"
-            sed -i '/tint2/d' "$START"
+            #sed -i '/tint2/d' "$START"
         elif grep -q "nitrogen" "$START"; then
             sed -i '/nitrogen/ a sleep 1; manjaro-polybar-session &' "$START"
         else
@@ -100,10 +100,10 @@ setup_tint2() {
     if [[ -f $START ]] && ! grep -q "manjaro-tint2-session" "$START"; then
         if grep -q "tint2" "$START"; then
             sed -i '/tint2/ a sleep 1; manjaro-tint2-session &' "$START"
-            sed -i '/tint2/d' "$START"
+            # sed -i '/tint2/d' "$START"
         elif grep -q "polybar" "$START"; then
             sed -i '/polybar/ a sleep 1; manjaro-tint2-session &' "$START"
-            sed -i '/polybar/d' "$START"
+            # sed -i '/polybar/d' "$START"
         elif grep -q "nitrogen" "$START"; then
             sed -i '/nitrogen/ a sleep 1; manjaro-tint2-session &' "$START"
         else
