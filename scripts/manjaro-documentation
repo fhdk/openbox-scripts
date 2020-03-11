@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xdg-open '/usr/share/doc/manjaro/Beginner_User_Guide.pdf'

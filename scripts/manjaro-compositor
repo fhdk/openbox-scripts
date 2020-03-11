@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
-# manjaro-compositor: an Openbox Pipe Menu for use with compton compositor
+# manjaro-compositor: an Openbox Pipe Menu for use with picom compositor
 # Copyright (C) 2012 Philip Newborough <corenominal@corenominal.org>
 # Copyright (C) 2013 Aleks-Daniel Jakimenko
 # Copyright (C) 2015 John Crawley <john@bunsenlabs.org>
 
-readonly EXECXCOMP='compton -b'
+readonly PICOM_CONF="$HOME/.config/picom/picom.conf"
+readonly EXECXCOMP="picom -b --config ${PICOM_CONF}"
 readonly RESTART_ATTEMPTS=20
-readonly HELP='
-manjaro-compositor an openbox pipe menu for use with compton
+readonly HELP="
+manjaro-compositor an openbox pipe menu for use with picom
 It should normally be called from an openbox menu.
 
 Options (passed from the menu):
@@ -16,13 +17,13 @@ Options (passed from the menu):
     --start     start the compositor and restart tint2, if running
     --restart   restart the compositor, if running
     --stop      stop the compositor
-    --edit      open the compton config file in a text editor
-    --watch     restart compton when the config is modified (useful for debugging)
+    --edit      open the picom config file in a text editor
+    --watch     restart picom when the config is modified (useful for debugging)
 
 If manjaro-compositor is called with no options (the usual method),
 it will output an xml openbox pipemenu for handling compositing.
 
-See ~/.config/compton.conf and "man compton" for configuration options.'
+See ~/.config/picom/picom.conf and 'man picom' for configuration options."
 
 for i in "$@"; do
     case "$i" in
@@ -34,53 +35,54 @@ if ! . "/usr/lib/manjaro/common/manjaro-include.cfg" 2>/dev/null; then
     echo $"Error: Failed to source /usr/lib/manjaro/common/manjaro-include.cfg" >&2 ; exit 1
 fi
 
-declareDependencies compton
+declareDependencies picom
 
-forcekill_compton() {
-    killall -q compton
+forcekill_picom() {
+    killall -q picom
     for ((i=0; i<RESTART_ATTEMPTS; i++)); do
-        [[ $(pidof compton) ]] || break
-        killall -q -S KILL compton
+        [[ $(pidof picom) ]] || break
+        killall -q -S KILL picom
         sleep 0.25
     done
 }
 
 
-if [[ $1 = '--edit' ]]; then # Edit compton settings
-    if ! [ -e "$HOME/.config/compton.conf" ]; then
-        cp '/etc/skel/.config/compton.conf' "$HOME/.config/compton.conf"
+if [[ $1 = '--edit' ]]; then # Edit picom settings
+    if ! [ -e "${PICOM_CONF}" ]; then
+        mkdir -p "$HOME/.config/picom"
+        cp '/etc/skel/.config/picom/picom.conf' "${PICOM_CONF}"
     fi
     if hash exo-open &>/dev/null; then
-        exo-open "$HOME/.config/compton.conf"
+        exo-open "${PICOM_CONF}"
     else
-        termite -e "$EDITOR $HOME/.config/compton.conf"
+        termite -e "$EDITOR ${PICOM_CONF}"
     fi
 elif [[ $1 = '--start' ]]; then
-    if ! [[ $(pidof compton) ]]; then
+    if ! [[ $(pidof picom) ]]; then
         $EXECXCOMP
     else
-        echo "$0 --start: Compton already running" && exit 1
+        echo "$0 --start: Compositor already running" && exit 1
     fi
 
 elif [[ $1 = '--stop' ]]; then
-    forcekill_compton
+    forcekill_picom
 
 elif [[ $1 = '--restart' ]]; then
-    if [[ $(pidof compton) ]]; then
-        forcekill_compton
+    if [[ $(pidof picom) ]]; then
+        forcekill_picom
         "$0" --start
     else # nothing to restart
-        echo "$0 --restart: Compton is not running" && exit 1
+        echo "$0 --restart: Compositor is not running" && exit 1
     fi
 
 elif [[ $1 = '--watch' ]]; then
-    while inotifywait -e close_write "$HOME/.config/compton.conf"; do
+    while inotifywait -e close_write "${PICOM_CONF}"; do
         "$0" --restart
     done
 
 else
     menuStart
-    if ! [[ $(pidof compton) ]]; then
+    if ! [[ $(pidof picom) ]]; then
         menuItem 'Enable Compositing' "$0 --start"
     else
         menuItem 'Restart Compositing' "$0 --restart"
@@ -88,9 +90,9 @@ else
         menuSeparator
     fi
     if [[ -e /usr/bin/paranoid.py ]]; then
-        menuItem 'Compton Settings GUI' "paranoid.py"
+        menuItem 'Compositor Settings GUI' "paranoid.py"
     fi
-    menuItem 'Edit Compton Config' "$0 --edit"
+    menuItem 'Edit Compositor Config' "$0 --edit"
     menuEnd
 fi
 

@@ -28,7 +28,7 @@ while true; do
     done
 
     while [[ $updates -eq 0 ]]; do
-        echo $BAR_ICON
+        echo "" #$BAR_ICON
         sleep 1200
         updates=$(checkupdates | wc -l)
     done
