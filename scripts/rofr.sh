@@ -3,6 +3,10 @@
 Name=$(basename "$0")
 Version="0.1"
 
+if [[ -z $ICON_THEME ]]; then
+    ICON_THEME="Moka"
+fi
+
 _usage() {
     cat <<- EOF
 Usage:   $Name [options]
@@ -57,12 +61,12 @@ while getopts ":hvqwcbmrl" opt; do
             rofi -location 1 -yoffset 40 -xoffset 10 \
                 -modi run,drun -show drun -line-padding 50 \
                 -columns 2 -padding 50 -hide-scrollbar \
-                -show-icons -drun-icon-theme "Papirus-Adapta-Nokto-Maia"
+                -show-icons -drun-icon-theme "$ICON_THEME"
             ;;
         r)
             rofi -modi run,drun -show drun -line-padding 50 \
                 -columns 2 -padding 50 -hide-scrollbar \
-                -show-icons -drun-icon-theme "Papirus-Adapta-Nokto-Maia"
+                -show-icons -drun-icon-theme "$ICON_THEME"
             ;;
         l)
             ANS=$(echo " Lock| Logout| Reboot| Shutdown" | \
