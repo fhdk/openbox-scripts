@@ -97,7 +97,10 @@ create_Session() {
     echo -e "# Polybar $WM Sessionfile
 # DO NO edit this file, it will be overwritten by manjaro-polyzen
 # Instead make a custom sessionfile and use the -z FILE or --session FILE option
-# To load session at startup use the following line\n\n# sleep 1; manjaro-polybar-session &\n" > "$SESSIONFILE"
+# To load session at startup use the following line
+#
+# sleep 1; manjaro-polybar-session &
+#" > "$SESSIONFILE"
     for bar in $ANSWER; do
         for config in "${barPath[@]}"; do
             if grep -q "^\[bar/$bar\]" "$config" && ! grep -q "$config $bar" "$SESSIONFILE"; then

@@ -89,9 +89,6 @@ else
         menuItem 'Disable Compositing' "$0 --stop"
         menuSeparator
     fi
-    if [[ -e /usr/bin/paranoid.py ]]; then
-        menuItem 'Compositor Settings GUI' "paranoid.py"
-    fi
     menuItem 'Edit Compositor Config' "$0 --edit"
     menuEnd
 fi
